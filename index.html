@@ -32,10 +32,10 @@ if (typeof THREE !== 'undefined' && typeof THREE.GLTFLoader === 'undefined') {
   --sp-4: 16px;
   --sp-6: 24px;
   --sp-8: 32px;
-  --font-h1: clamp(22px, 2.0vw, 30px);
-  --font-h2: clamp(16px, 1.25vw, 20px);
-  --font-body: clamp(13px, 0.95vw, 15px);
-  --font-small: clamp(11.5px, 0.8vw, 13px);
+  --font-h1: clamp(26px, 2.3vw, 36px);
+  --font-h2: clamp(19px, 1.44vw, 24px);
+  --font-body: clamp(16px, 1.09vw, 18px);
+  --font-small: clamp(14px, 0.92vw, 16px);
   --bg-primary: #0a0e17;
   --bg-secondary: #131c2e;
   --bg-card: rgba(19, 28, 46, 0.85);
@@ -115,7 +115,7 @@ header {
   color: #fff;
   padding: 3px 9px;
   border-radius: 6px;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 700;
   letter-spacing: 1px;
   box-shadow: 0 0 10px var(--accent-gold-glow);
@@ -124,7 +124,7 @@ header {
 }
 
 .logo-title {
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 700;
   letter-spacing: 0.5px;
   color: #fff;
@@ -136,7 +136,7 @@ header {
 }
 
 .logo-title .logo-sub {
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 400;
   color: var(--text-muted);
 }
@@ -158,7 +158,7 @@ header {
   color: var(--text-muted);
   padding: 5px 14px;
   border-radius: 20px;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.25s ease;
@@ -184,7 +184,7 @@ header {
   background: rgba(0, 0, 0, 0.35);
   padding: 1px 5px;
   border-radius: 4px;
-  font-size: 11px;
+  font-size: 13px;
   font-family: monospace;
 }
 
@@ -202,7 +202,7 @@ header {
   color: var(--text-main);
   padding: 6px 12px;
   border-radius: 8px;
-  font-size: 12.5px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   display: inline-flex;
@@ -235,7 +235,7 @@ header {
 main {
   position: absolute;
   top: 98px;
-  bottom: 38px;
+  bottom: 42px;
   left: 0;
   right: 0;
   overflow: hidden;
@@ -310,7 +310,7 @@ main {
   background: rgba(6, 182, 212, 0.12);
   color: var(--accent-cyan);
   border: 1px solid rgba(6, 182, 212, 0.6);
-  font-size: 11.5px;
+  font-size: 14px;
   padding: 2px 9px;
   border-radius: 12px;
   font-weight: 600;
@@ -342,7 +342,7 @@ main {
   padding: 7px 12px;
   border-radius: 8px;
   border: 1px solid var(--border-color);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-muted);
   max-width: 290px;
   pointer-events: none;
@@ -352,21 +352,21 @@ main {
 .canvas-hud-title {
   font-weight: 700;
   color: #fff;
-  font-size: 13px;
+  font-size: 16px;
   display: flex;
   align-items: center;
   gap: 6px;
 }
 
 .canvas-hud-sub {
-  font-size: 11px;
+  font-size: 13px;
   color: var(--text-muted);
   margin-top: 2px;
 }
 
 #model-status-tag {
   margin-top: 4px;
-  font-size: 11.5px;
+  font-size: 14px;
   font-weight: 600;
   color: var(--accent-cyan);
 }
@@ -380,7 +380,7 @@ main {
   color: #fff;
   padding: 7px 15px;
   border-radius: 8px;
-  font-size: 12.5px;
+  font-size: 15px;
   font-weight: 600;
   box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
   backdrop-filter: blur(8px);
@@ -422,7 +422,7 @@ main {
   color: var(--text-main);
   padding: 5px 13px;
   border-radius: 18px;
-  font-size: 12.5px;
+  font-size: 15px;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
@@ -494,7 +494,7 @@ main {
   position: absolute;
   right: 14px;
   top: 10px;
-  font-size: 24px;
+  font-size: 29px;
   font-weight: 800;
   color: rgba(255, 255, 255, 0.07);
 }
@@ -512,7 +512,7 @@ main {
 .concept-title .tag-num {
   background: var(--accent-gold);
   color: #000;
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 800;
   width: 20px;
   height: 20px;
@@ -588,7 +588,7 @@ main {
   display: inline-block;
   background: var(--accent-gold);
   color: #000;
-  font-size: 14px;
+  font-size: 17px;
   font-weight: 800;
   padding: 5px 18px;
   border-radius: 20px;
@@ -597,7 +597,7 @@ main {
 }
 
 .spotlight-main-title {
-  font-size: clamp(30px, 3.2vw, 42px);
+  font-size: clamp(36px, 3.8vw, 50px);
   font-weight: 800;
   color: #ffffff;
   margin-bottom: 24px;
@@ -614,7 +614,7 @@ main {
 }
 
 .spotlight-item {
-  font-size: clamp(18px, 1.8vw, 24px);
+  font-size: clamp(22px, 2.2vw, 29px);
   font-weight: 700;
   background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.15);
@@ -636,7 +636,7 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 18px;
+  font-size: 22px;
   font-weight: 800;
   flex-shrink: 0;
 }
@@ -646,14 +646,14 @@ main {
 }
 
 .spotlight-item .item-sub {
-  font-size: 15px;
+  font-size: 18px;
   color: var(--accent-gold);
   font-weight: 500;
 }
 
 .spotlight-close-tip {
   margin-top: 28px;
-  font-size: 13px;
+  font-size: 16px;
   color: var(--text-muted);
 }
 
@@ -671,27 +671,40 @@ footer {
   bottom: 0;
   left: 0;
   right: 0;
-  height: 38px;
+  height: 42px;
   background: rgba(10, 14, 23, 0.95);
   border-top: 1px solid var(--border-color);
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0 var(--sp-6);
-  font-size: 12px;
+  font-size: 14px;
   color: var(--text-muted);
   z-index: 100;
+  white-space: nowrap;
+  overflow: hidden;
+  gap: 12px;
+}
+
+.footer-left {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  min-width: 0;
 }
 
 .footer-keys {
   display: flex;
-  gap: 14px;
+  gap: 12px;
+  flex-shrink: 0;
+  white-space: nowrap;
 }
 
 .footer-key-item {
   display: flex;
   align-items: center;
   gap: 5px;
+  white-space: nowrap;
 }
 
 .footer-key-item kbd {
@@ -700,6 +713,7 @@ footer {
   border-radius: 4px;
   color: #fff;
   font-family: monospace;
+  white-space: nowrap;
 }
 
 /* 捲軸美化 */
@@ -751,7 +765,7 @@ footer {
 
 .gallery-thumb .label {
   padding: 8px 10px;
-  font-size: 12.5px;
+  font-size: 15px;
   font-weight: 600;
   color: #e2e8f0;
   white-space: nowrap;
@@ -788,7 +802,7 @@ footer {
 @media (max-width: 1440px) {
   .nav-btn {
     padding: 5px 11px;
-    font-size: 12.5px;
+    font-size: 15px;
   }
 }
 
@@ -830,11 +844,15 @@ footer {
   }
   main {
     top: 86px;
-    bottom: 32px;
+    bottom: 36px;
   }
   footer {
-    height: 32px;
+    height: 36px;
     padding: 0 var(--sp-4);
+    font-size: 12px;
+  }
+  .footer-keys {
+    gap: 8px;
   }
   .panel {
     padding: var(--sp-3) var(--sp-4);
@@ -853,8 +871,41 @@ footer {
   }
   .sim-btn {
     padding: 4px 10px;
-    font-size: 11.5px;
+    font-size: 14px;
   }
+}
+
+/* Slide-1（俯臥評估）：左側拓寬，讓五點說明在單頁高度內完整顯示，不需下拉捲動 */
+#slide-1 .content-grid-2 {
+  grid-template-columns: 1.55fr 0.75fr;
+}
+#slide-1 .concept-card {
+  padding: 10px 14px;
+  margin-bottom: 8px;
+}
+#slide-1 .concept-desc {
+  line-height: 1.45;
+}
+
+/* Slide-3（五大重點）：左側重點清單濃縮以完整顯示，右側示意圖欄位加寬以容納放大版橫式示意圖 */
+#slide-3 .content-grid-2 {
+  grid-template-columns: 0.9fr 1.3fr;
+}
+#slide-3 .concept-card {
+  padding: 6px 12px;
+  margin-bottom: 5px;
+}
+#slide-3 .concept-title {
+  margin-bottom: 1px;
+  font-size: 17px;
+}
+#slide-3 .concept-desc {
+  line-height: 1.32;
+  font-size: 14px;
+}
+#slide-3 .panel-header {
+  margin-bottom: 6px;
+  padding-bottom: 4px;
 }
 </style>
 </head>
@@ -933,25 +984,25 @@ footer {
       </div>
 
       <div class="panel" style="background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); align-items: center; justify-content: center; text-align: center;">
-        <div style="font-size: 15px; color: var(--accent-cyan); font-weight: 700; margin-bottom: 12px; letter-spacing: 2px;">現場示範核心架構</div>
-        <div style="font-size: 32px; font-weight: 800; color: #fff; line-height: 1.4; margin-bottom: 24px;">
+        <div style="font-size: 18px; color: var(--accent-cyan); font-weight: 700; margin-bottom: 12px; letter-spacing: 2px;">現場示範核心架構</div>
+        <div style="font-size: 38px; font-weight: 800; color: #fff; line-height: 1.4; margin-bottom: 24px;">
           髖為底座・脊柱中樑<br>
           <span style="color: var(--accent-gold);">一推鬆動・筋骨合槽</span>
         </div>
         
         <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 460px; text-align: left;">
           <div style="background: rgba(255,255,255,0.05); padding: 14px 18px; border-radius: 10px; border-left: 4px solid var(--accent-gold);">
-            <div style="color: var(--accent-gold); font-weight: 700; font-size: 15px;">三點支撐架構</div>
-            <div style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">支點、施力點、受力點形成穩固力矩</div>
+            <div style="color: var(--accent-gold); font-weight: 700; font-size: 18px;">三點支撐架構</div>
+            <div style="color: var(--text-muted); font-size: 16px; margin-top: 4px;">支點、施力點、受力點形成穩固力矩</div>
           </div>
           <div style="background: rgba(255,255,255,0.05); padding: 14px 18px; border-radius: 10px; border-left: 4px solid var(--accent-cyan);">
-            <div style="color: var(--accent-cyan); font-weight: 700; font-size: 15px;">動態回饋監測</div>
-            <div style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">隨時觀察腳跟對稱、臀型與呼吸</div>
+            <div style="color: var(--accent-cyan); font-weight: 700; font-size: 18px;">動態回饋監測</div>
+            <div style="color: var(--text-muted); font-size: 16px; margin-top: 4px;">隨時觀察腳跟對稱、臀型與呼吸</div>
           </div>
         </div>
 
         <div style="margin-top: 30px; display: flex; gap: 14px;">
-          <button class="action-btn hotkey-prompt" style="padding: 12px 24px; font-size: 15px;" onclick="switchSlide(2)">👉 進入 3D 骨盆力學模擬</button>
+          <button class="action-btn hotkey-prompt" style="padding: 12px 24px; font-size: 18px;" onclick="switchSlide(2)">👉 進入 3D 骨盆力學模擬</button>
         </div>
       </div>
     </div>
@@ -966,7 +1017,7 @@ footer {
           <div class="panel-tag">精準觸診前必備</div>
         </div>
 
-        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px; line-height: 1.6;">
+        <p style="color: var(--text-muted); font-size: 17px; margin-bottom: 16px; line-height: 1.6;">
           患者自然放鬆趴在整復床上，不刻意擺正。此時身體呈現最真實的失衡歪斜狀態，從頭到腳觀察五大連鎖指標：
         </p>
 
@@ -1006,8 +1057,8 @@ footer {
 
       <div class="panel" style="background: rgba(15, 23, 42, 0.95); justify-content: space-around;">
         <div style="text-align: center;">
-          <div style="font-size: 18px; font-weight: 700; color: var(--accent-gold); margin-bottom: 8px;">全身骨架骨盆連鎖代償示意圖</div>
-          <div style="font-size: 13px; color: var(--text-muted);">骨盆歪斜不是局部問題，而是牽一髮動全身的整體力學失衡</div>
+          <div style="font-size: 22px; font-weight: 700; color: var(--accent-gold); margin-bottom: 8px;">全身骨架骨盆連鎖代償示意圖</div>
+          <div style="font-size: 16px; color: var(--text-muted);">骨盆歪斜不是局部問題，而是牽一髮動全身的整體力學失衡</div>
         </div>
 
         <!-- SVG 示意全身連鎖代償 -->
@@ -1059,7 +1110,7 @@ footer {
           <text x="260" y="452" fill="#10b981" font-size="14" class="svg-label">長腳 (落差約2~3指)</text>
         </svg>
 
-        <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; font-size: 13px;">
+        <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; font-size: 16px;">
           📌 <span class="highlight-text">現場判定準則</span>：先判定歪斜高點與受力板塊，決定第一施力點，切勿盲目兩邊硬推！
         </div>
       </div>
@@ -1134,7 +1185,7 @@ footer {
           </div>
         </div>
 
-        <div style="margin-top: auto; padding: 12px; background: rgba(6, 182, 212, 0.08); border: 1px dashed var(--accent-cyan); border-radius: 10px; font-size: 12.5px; color: var(--text-muted);">
+        <div style="margin-top: auto; padding: 12px; background: rgba(6, 182, 212, 0.08); border: 1px dashed var(--accent-cyan); border-radius: 10px; font-size: 15px; color: var(--text-muted);">
           💡 <span class="cyan-text">互動操作</span>：點選「骨盆歪斜態」觀察左骨盆高提與脊柱代償；點選「推髖動態復位」體驗施力回槽動態。
         </div>
       </div>
@@ -1203,7 +1254,7 @@ footer {
           <div class="panel-tag" id="point-detail-tag">按鍵 [1]</div>
         </div>
 
-        <div id="point-detail-body" style="line-height: 1.8; font-size: 15px; color: #e2e8f0;">
+        <div id="point-detail-body" style="line-height: 1.8; font-size: 18px; color: #e2e8f0;">
           <div style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--accent-gold); padding: 14px 18px; border-radius: 8px; margin-bottom: 20px;">
             <div style="font-weight: 700; color: var(--accent-gold); margin-bottom: 4px;">施力手法與方向</div>
             <div id="point-detail-force">掌根或大魚際抵住髂後上脊內側緣，順應薦骨弧度向外下方以波浪律動緩慢推送。</div>
@@ -1211,38 +1262,114 @@ footer {
 
           <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
             <div style="background: rgba(255,255,255,0.04); padding: 12px; border-radius: 8px;">
-              <div style="color: var(--accent-cyan); font-weight: 700; font-size: 13px;">觸診特徵</div>
-              <div id="point-detail-touch" style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">常可摸到懸崖邊之隆起硬結或骨縫落差。</div>
+              <div style="color: var(--accent-cyan); font-weight: 700; font-size: 16px;">觸診特徵</div>
+              <div id="point-detail-touch" style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">常可摸到懸崖邊之隆起硬結或骨縫落差。</div>
             </div>
             <div style="background: rgba(255,255,255,0.04); padding: 12px; border-radius: 8px;">
-              <div style="color: var(--accent-gold); font-weight: 700; font-size: 13px;">臨床連鎖改善</div>
-              <div id="point-detail-relief" style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">解除同側腰臀牽拉感，即刻改善雙腿長短差。</div>
+              <div style="color: var(--accent-gold); font-weight: 700; font-size: 16px;">臨床連鎖改善</div>
+              <div id="point-detail-relief" style="font-size: 16px; color: var(--text-muted); margin-top: 4px;">解除同側腰臀牽拉感，即刻改善雙腿長短差。</div>
             </div>
           </div>
 
-          <!-- 解剖向量圖 -->
-          <svg viewBox="0 0 360 200" style="width: 100%; height: 180px; background: rgba(0,0,0,0.3); border-radius: 10px; border: 1px solid var(--border-color);">
-            <rect width="360" height="200" fill="transparent"/>
-            <!-- 骨盆背側示意 -->
-            <path d="M 60 70 Q 180 30 300 70 Q 330 140 280 180 Q 180 160 80 180 Z" fill="rgba(6, 182, 212, 0.15)" stroke="#06b6d4" stroke-width="2"/>
-            <!-- 薦骨倒三角 -->
-            <polygon points="180,50 140,160 220,160" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" stroke-width="2"/>
-            
-            <!-- 動態標記點 -->
-            <circle id="svg-mark-point" cx="140" cy="75" r="10" fill="#ef4444" stroke="#fff" stroke-width="2">
-              <animate attributeName="r" values="8;13;8" dur="1.5s" repeatCount="indefinite"/>
-            </circle>
-            <text id="svg-mark-text" x="160" y="80" fill="#fff" font-size="14" font-weight="bold">1. 髂後上脊 (PSIS)</text>
+          <!-- 俯視動態示意（橫式放大版）：患者趴臥姿態 + 骨盆歪斜→回正動畫 + 施力點與方向
+               說明：主體圖形（床、人形剪影、骨架動畫、標記點、箭頭線）統一包在同一個
+               transform="translate(0,250) rotate(-90)" 群組內，直接沿用原本直式座標，
+               靠群組旋轉變成橫式俯視圖（頭在左、腳在右），不需重算每個動畫關鍵影格座標。
+               箭頭文字與床邊說明文字則放在旋轉群組之外，避免文字跟著轉向而難以閱讀。 -->
+          <svg viewBox="0 0 256 206" style="width: 100%; height: 300px; background: rgba(0,0,0,0.3); border-radius: 10px; border: 1px solid var(--border-color);">
+            <defs>
+              <marker id="force-arrow-head" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
+                <path d="M0,0 L8,4 L0,8 Z" fill="#f59e0b"/>
+              </marker>
+            </defs>
+            <rect width="256" height="206" fill="transparent"/>
+            <text x="128" y="199" text-anchor="middle" fill="#64748b" font-size="11">俯視：患者趴臥於治療床（左：頭側　右：腳側）</text>
 
-            <!-- 施力方向箭頭 -->
-            <line id="svg-arrow-line" x1="140" y1="75" x2="110" y2="120" stroke="#f59e0b" stroke-width="4" marker-end="url(#arrow)"/>
-            <text id="svg-arrow-text" x="70" y="140" fill="#f59e0b" font-size="12">施力方向 ↘</text>
+            <g transform="translate(0,250) rotate(-90)">
+              <!-- 治療床 -->
+              <rect x="55" y="8" width="190" height="238" rx="20" fill="rgba(255,255,255,0.02)" stroke="rgba(255,255,255,0.1)" stroke-width="1.5"/>
+
+              <!-- 人形剪影（半透明，示意趴臥姿態） -->
+              <g fill="rgba(148,163,184,0.14)" stroke="rgba(148,163,184,0.3)" stroke-width="1.5">
+                <ellipse cx="150" cy="35" rx="18" ry="22"/>
+                <path d="M 108 65 Q 150 50 192 65 L 185 120 Q 150 132 115 120 Z"/>
+                <path d="M 115 120 Q 150 140 185 120 L 172 190 Q 150 202 128 190 Z"/>
+                <line x1="134" y1="190" x2="128" y2="236" stroke-width="7" stroke-linecap="round"/>
+                <line x1="166" y1="190" x2="172" y2="236" stroke-width="7" stroke-linecap="round"/>
+              </g>
+
+              <!-- 中軸垂直基準虛線 -->
+              <line x1="150" y1="15" x2="150" y2="240" stroke="#475569" stroke-width="1.5" stroke-dasharray="4,4"/>
+
+              <!-- 骨盆骨架漸進式動畫：大S歪斜 → 小S緩解 → 直線回正（三階段漸變，而非二元切換） -->
+              <g id="skeleton-progressive">
+                <line x1="120" y1="92" x2="178" y2="100" stroke="#ef4444" stroke-width="3.5">
+                  <animate attributeName="x1" values="120;120;121;121;122;122;120" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                  <animate attributeName="y1" values="92;92;94;94;96;96;92" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                  <animate attributeName="x2" values="178;178;178;178;178;178;178" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                  <animate attributeName="y2" values="100;100;98;98;96;96;100" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                  <animate attributeName="stroke" values="#ef4444;#ef4444;#eab308;#eab308;#10b981;#10b981;#ef4444" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                </line>
+
+                <path fill="none" stroke="#06b6d4" stroke-width="3" stroke-dasharray="4,2"
+                      d="M 150 100 C 168 125, 132 150, 152 178">
+                  <animate attributeName="d" dur="7s" repeatCount="indefinite"
+                    keyTimes="0;0.12;0.30;0.42;0.60;0.85;1"
+                    values="M 150 100 C 168 125, 132 150, 152 178;
+                            M 150 100 C 168 125, 132 150, 152 178;
+                            M 150 100 C 158 125, 142 150, 150 178;
+                            M 150 100 C 158 125, 142 150, 150 178;
+                            M 150 100 C 150 125, 150 150, 150 178;
+                            M 150 100 C 150 125, 150 150, 150 178;
+                            M 150 100 C 168 125, 132 150, 152 178"/>
+                </path>
+
+                <polygon points="112,150 196,166 180,208 128,196" fill="rgba(245,158,11,0.22)" stroke="#f59e0b" stroke-width="2.5">
+                  <animate attributeName="points" dur="7s" repeatCount="indefinite"
+                    keyTimes="0;0.12;0.30;0.42;0.60;0.85;1"
+                    values="112,150 196,166 180,208 128,196;
+                            112,150 196,166 180,208 128,196;
+                            114,155 190,163 179,205 125,199;
+                            114,155 190,163 179,205 125,199;
+                            116,160 184,160 178,202 122,202;
+                            116,160 184,160 178,202 122,202;
+                            112,150 196,166 180,208 128,196"/>
+                  <animate attributeName="stroke" values="#f59e0b;#f59e0b;#eab308;#eab308;#10b981;#10b981;#f59e0b" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                  <animate attributeName="fill" values="rgba(245,158,11,0.22);rgba(245,158,11,0.22);rgba(234,179,8,0.2);rgba(234,179,8,0.2);rgba(16,185,129,0.2);rgba(16,185,129,0.2);rgba(245,158,11,0.22)" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                </polygon>
+
+                <line x2="128" y2="236" stroke="#94a3b8" stroke-width="5" x1="134" y1="196">
+                  <animate attributeName="x1" values="134;134;132;132;130;130;134" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                  <animate attributeName="y1" values="196;196;199;199;202;202;196" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                </line>
+
+                <line stroke="#94a3b8" stroke-width="5" x1="176" y1="208" x2="183" y2="236">
+                  <animate attributeName="x1" values="176;176;173;173;170;170;176" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                  <animate attributeName="y1" values="208;208;205;205;202;202;208" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                  <animate attributeName="x2" values="183;183;178;178;172;172;183" keyTimes="0;0.12;0.30;0.42;0.60;0.85;1" dur="7s" repeatCount="indefinite"/>
+                </line>
+              </g>
+
+              <!-- 動態施力點標記（脈動紅點，位置隨重點切換） -->
+              <circle id="svg-mark-point" cx="118" cy="153" r="8" fill="#ef4444" stroke="#fff" stroke-width="2">
+                <animate attributeName="r" values="6.5;10;6.5" dur="1.4s" repeatCount="indefinite"/>
+              </circle>
+
+              <!-- 施力方向箭頭線（隨群組一起旋轉，箭頭文字另外置於群組外保持水平） -->
+              <g id="svg-arrow-group">
+                <animate attributeName="opacity" values="1;0.2;1" dur="0.9s" repeatCount="indefinite"/>
+                <line id="svg-arrow-line" x1="118" y1="153" x2="90" y2="180" stroke="#f59e0b" stroke-width="4" marker-end="url(#force-arrow-head)"/>
+              </g>
+            </g>
+
+            <!-- 施力方向文字標籤（置於旋轉群組外，保持水平易讀，位置由 JS 依旋轉公式換算） -->
+            <text id="svg-arrow-text" x="188" y="107" fill="#f59e0b" font-size="13" font-weight="700">施力方向 ↙</text>
           </svg>
         </div>
 
         <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px;">
           <button class="action-btn" onclick="prevPoint()">⬅ 上一個重點</button>
-          <span style="font-size: 13px; color: var(--text-muted);">使用鍵盤數字鍵 <kbd>1</kbd> ~ <kbd>5</kbd> 快速切換</span>
+          <span style="font-size: 16px; color: var(--text-muted);">使用鍵盤數字鍵 <kbd>1</kbd> ~ <kbd>5</kbd> 快速切換</span>
           <button class="action-btn" onclick="nextPoint()">下一個重點 ➡</button>
         </div>
       </div>
@@ -1289,7 +1416,7 @@ footer {
       </div>
 
       <div class="panel" style="background: rgba(15, 23, 42, 0.95); text-align: center; justify-content: center;">
-        <div style="font-size: 18px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 12px;">薦骨等腰三角基準與五大釋放點分佈</div>
+        <div style="font-size: 22px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 12px;">薦骨等腰三角基準與五大釋放點分佈</div>
         
         <svg viewBox="0 0 400 390" style="max-height: 340px; width: 100%; margin: 0 auto;">
           <defs>
@@ -1336,7 +1463,7 @@ footer {
           <text x="216" y="285" fill="#cbd5e1" font-size="13" class="svg-label-f5">S5 尾骨底</text>
         </svg>
 
-        <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; font-size: 13px; color: var(--text-muted); margin-top: 10px;">
+        <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; font-size: 16px; color: var(--text-muted); margin-top: 10px;">
           沿著懸崖邊骨縫以「推、撥、滑、壓」手法，將筋結小珠珠推散，骨盤與薦椎自然回正！
         </div>
       </div>
@@ -1351,15 +1478,15 @@ footer {
         <div class="panel-header">
           <div class="panel-title" style="color: var(--accent-cyan);">📐 1. 角度 (Angle)</div>
         </div>
-        <div style="font-size: 15px; line-height: 1.8; color: #cbd5e1;">
+        <div style="font-size: 18px; line-height: 1.8; color: #cbd5e1;">
           <p><b class="cyan-text">精準切入角度：</b></p>
           <p>施術者的施力角度必須與關節面切線形成有效力矩。骨盆為三維空間曲面，不同點位各有角度：</p>
-          <ul style="margin: 12px 0 12px 20px; font-size: 14px;">
+          <ul style="margin: 12px 0 12px 20px; font-size: 17px;">
             <li><b>髂脊上端：</b>斜向前下方 45°</li>
             <li><b>大轉子：</b>沿股骨頸軸線向內上方 30°</li>
             <li><b>髂後上脊：</b>沿薦髂骨縫向外下方滑送</li>
           </ul>
-          <div style="background: rgba(6,182,212,0.1); padding: 12px; border-radius: 8px; font-size: 13px; border-left: 3px solid var(--accent-cyan);">
+          <div style="background: rgba(6,182,212,0.1); padding: 12px; border-radius: 8px; font-size: 16px; border-left: 3px solid var(--accent-cyan);">
             嚴禁垂直90度死壓！角度偏差會造成患者骨膜劇痛並引發強烈肌肉抵抗。
           </div>
         </div>
@@ -1370,15 +1497,15 @@ footer {
         <div class="panel-header">
           <div class="panel-title" style="color: var(--accent-gold);">🧭 2. 方向 (Direction)</div>
         </div>
-        <div style="font-size: 15px; line-height: 1.8; color: #cbd5e1;">
+        <div style="font-size: 18px; line-height: 1.8; color: #cbd5e1;">
           <p><b class="highlight-text">反向作用力原則：</b></p>
           <p>依據「牛頓第三運動定律」，受傷撞擊通常有明確方向（如滑倒跌坐使骨板前旋上移），推髖整復必須：</p>
-          <ul style="margin: 12px 0 12px 20px; font-size: 14px;">
+          <ul style="margin: 12px 0 12px 20px; font-size: 17px;">
             <li>高起凸出面（月餅面）先推，反方向推平</li>
             <li>牽引帶動骨盆翼由後向前、由外向內合攏</li>
             <li>一手鎖定對側肩胛骨作為阻抗支點，形成對角交叉引導</li>
           </ul>
-          <div style="background: rgba(245,158,11,0.1); padding: 12px; border-radius: 8px; font-size: 13px; border-left: 3px solid var(--accent-gold);">
+          <div style="background: rgba(245,158,11,0.1); padding: 12px; border-radius: 8px; font-size: 16px; border-left: 3px solid var(--accent-gold);">
             順勢而為，反向導引，讓錯位的板塊順著解剖滑軌滑回原槽。
           </div>
         </div>
@@ -1389,15 +1516,15 @@ footer {
         <div class="panel-header">
           <div class="panel-title" style="color: var(--accent-green);">⚡ 3. 力道 (Force)</div>
         </div>
-        <div style="font-size: 15px; line-height: 1.8; color: #cbd5e1;">
+        <div style="font-size: 18px; line-height: 1.8; color: #cbd5e1;">
           <p><b style="color: var(--accent-green);">柔中帶勁・身隨意動：</b></p>
           <p>影片中老師再三強調：「力道輕輕的就好，太大力患者會不舒服，而且你會找不到它的感覺！」：</p>
-          <ul style="margin: 12px 0 12px 20px; font-size: 14px;">
+          <ul style="margin: 12px 0 12px 20px; font-size: 17px;">
             <li>力量來自於<b>施術者全身重心的輕輕前送</b></li>
             <li>手肘保持伸直，不做局部屈伸推撞</li>
             <li>以深透綿密的「推、送、揉、撥」化開深層粘連</li>
           </ul>
-          <div style="background: rgba(16,185,129,0.1); padding: 12px; border-radius: 8px; font-size: 13px; border-left: 3px solid var(--accent-green);">
+          <div style="background: rgba(16,185,129,0.1); padding: 12px; border-radius: 8px; font-size: 16px; border-left: 3px solid var(--accent-green);">
             輕柔是為了讓患者神經放鬆，關節間隙一旦鬆動開來，骨頭就自然聽話回正！
           </div>
         </div>
@@ -1438,15 +1565,15 @@ footer {
               <div style="width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg, #ef4444, #b91c1c); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 25px rgba(239,68,68,0.7); margin-bottom: 10px;">
                 <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
               </div>
-              <div style="background: rgba(15,23,42,0.88); border: 1px solid var(--accent-gold); color: #fff; padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+              <div style="background: rgba(15,23,42,0.88); border: 1px solid var(--accent-gold); color: #fff; padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 17px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
                 ▶️ 前往 YouTube 觀看高清完整課程
               </div>
             </a>
           </div>
           <div style="padding: 10px 14px; background: rgba(15, 23, 42, 0.95); display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color);">
-            <span style="font-size: 12.5px; color: var(--text-muted);">💡 雙擊 HTML 離線環境專用外鏈播放（避免瀏覽器沙盒限制）</span>
+            <span style="font-size: 15px; color: var(--text-muted);">💡 雙擊 HTML 離線環境專用外鏈播放（避免瀏覽器沙盒限制）</span>
             <a href="https://www.youtube.com/watch?v=6v7ZiSidOIA" target="_blank" rel="noopener noreferrer" 
-               style="color: var(--accent-cyan); font-size: 12.5px; text-decoration: underline; font-weight: 600;">
+               style="color: var(--accent-cyan); font-size: 15px; text-decoration: underline; font-weight: 600;">
               在新視窗開啟 ↗
             </a>
           </div>
@@ -1454,7 +1581,7 @@ footer {
 
         <div style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 14px; border: 1px solid var(--border-color);">
           <div style="font-weight: 700; color: var(--accent-gold); margin-bottom: 8px;">⏱️ 影片精華實操節點回顧：</div>
-          <div style="font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+          <div style="font-size: 16px; color: var(--text-muted); line-height: 1.8;">
             • <b>01:20</b> 俯臥五體投地觀察（中軸歪斜15度、小腿外翻、月餅面與小籠包）<br>
             • <b>02:30</b> 摔撞板塊判定與推髖五點定位<br>
             • <b>04:10</b> 施術者站姿與核心重心前送技巧（手肘打直）<br>
@@ -1490,10 +1617,9 @@ footer {
 
 <!-- 底部狀態列與按鍵指引 -->
 <footer>
-  <div>
-    <span>📍 何訓誠老師整復成果發表</span> | 
-    <span id="slide-indicator" style="color: var(--accent-gold); font-weight: bold;">[1/7] 核心原理</span> | 
-    <span style="font-size: 11.5px; opacity: 0.85; color: #cbd5e1;">3D 骨骼模型出處：BodyParts3D, © The Database Center for Life Science, CC BY-SA 2.1 JP</span>
+  <div class="footer-left">
+    <span id="slide-indicator" style="color: var(--accent-gold); font-weight: bold;">[1/7] 核心原理</span> |
+    <span style="font-size: 13px; opacity: 0.85; color: #cbd5e1;">3D 骨骼模型出處：BodyParts3D, © The Database Center for Life Science, CC BY-SA 2.1 JP</span>
   </div>
 
   <div class="footer-keys">
@@ -1649,9 +1775,8 @@ const pointDetails = [
     force: "掌根或大魚際抵住髂後上脊內側緣，順應薦骨弧度向外下方以波浪律動緩慢推送。",
     touch: "常可摸到懸崖邊之隆起硬結或骨縫落差。",
     relief: "解除同側腰臀牽拉感，即刻改善雙腿長短差。",
-    svgX: 140, svgY: 75,
-    name: "1. 髂後上脊 (PSIS)",
-    arrowX: 100, arrowY: 120,
+    svgX: 118, svgY: 153,
+    arrowX: 146, arrowY: 180,
     arrowText: "施力方向 ↘"
   },
   {
@@ -1660,10 +1785,9 @@ const pointDetails = [
     force: "以拇指指腹或疊掌置於 PIIS 下緣，朝向前上方配合患者吐氣輕柔推送。",
     touch: "深層薦骨結節韌帶張力緊繃，常伴有壓痛點。",
     relief: "釋放薦骨下端卡鎖，減輕坐骨神經走行區張力。",
-    svgX: 150, svgY: 110,
-    name: "2. 髂後下脊 (PIIS)",
-    arrowX: 170, arrowY: 150,
-    arrowText: "施力方向 ↙"
+    svgX: 138, svgY: 192,
+    arrowX: 145, arrowY: 160,
+    arrowText: "施力方向 ↑"
   },
   {
     title: "📍 重點三：大轉子 (Greater Trochanter) 施術要領",
@@ -1671,10 +1795,9 @@ const pointDetails = [
     force: "雙手掌根環抱大轉子外側，手肘打直，身體重心由外向內下方緩慢擠壓旋正。",
     touch: "大轉子明顯向外膨出，臀中肌與梨狀肌緊繃呈條索狀。",
     relief: "使股骨頭深納入髖臼，立即平衡雙下肢長短與內外旋角度。",
-    svgX: 55, svgY: 130,
-    name: "3. 大轉子 (Greater Trochanter)",
-    arrowX: 110, arrowY: 140,
-    arrowText: "向內上方推入 ➡"
+    svgX: 100, svgY: 178,
+    arrowX: 130, arrowY: 165,
+    arrowText: "向內上方推入 ↗"
   },
   {
     title: "📍 重點四：坐骨 / 坐骨結節 (Ischium) 施術要領",
@@ -1682,10 +1805,9 @@ const pointDetails = [
     force: "掌根穩固扣住坐骨結節後下緣，沿人體長軸向前上方輕推，展平骨盆後部板塊。",
     touch: "臀肌深部厚實骨塊，兩側高低與深度常有顯著不對稱。",
     relief: "調整骨盆前後傾角，放鬆大腿後側膕繩肌起點。",
-    svgX: 125, svgY: 165,
-    name: "4. 坐骨結節 (Ischium)",
-    arrowX: 150, arrowY: 125,
-    arrowText: "向前上方送 ↗"
+    svgX: 148, svgY: 202,
+    arrowX: 152, arrowY: 172,
+    arrowText: "向前上方送 ↑"
   },
   {
     title: "📍 重點五：髂脊上端 (Iliac Crest) 施術要領",
@@ -1693,10 +1815,9 @@ const pointDetails = [
     force: "一手鎖定對側肩胛骨，另一手掌根鎖定髂脊上端，由後向前下方大面積深透推動。",
     touch: "腰方肌與腹橫肌附著處，骨脊頂部通常偏高且緊硬。",
     relief: "帶動整個髂骨板塊回旋，恢復骨盆對稱水平面。",
-    svgX: 90, svgY: 55,
-    name: "5. 髂脊上端 (Iliac Crest)",
-    arrowX: 130, arrowY: 90,
-    arrowText: "向前下方送 ↘"
+    svgX: 170, svgY: 150,
+    arrowX: 148, arrowY: 178,
+    arrowText: "向前下方送 ↙"
   }
 ];
 
@@ -1720,24 +1841,24 @@ function selectPoint(num) {
   document.getElementById('point-detail-touch').textContent = d.touch;
   document.getElementById('point-detail-relief').textContent = d.relief;
 
-  // 更新 SVG 標記
+  // 更新 SVG 標記（施力點紅點 + 方向箭頭，部位文字標籤已移除，改以動態骨架示意）
   const svgMark = document.getElementById('svg-mark-point');
-  const svgText = document.getElementById('svg-mark-text');
   const svgLine = document.getElementById('svg-arrow-line');
   const svgArrowText = document.getElementById('svg-arrow-text');
 
   if (svgMark) {
     svgMark.setAttribute('cx', d.svgX);
     svgMark.setAttribute('cy', d.svgY);
-    svgText.setAttribute('x', d.svgX + 20);
-    svgText.setAttribute('y', d.svgY + 5);
-    svgText.textContent = d.name;
     svgLine.setAttribute('x1', d.svgX);
     svgLine.setAttribute('y1', d.svgY);
     svgLine.setAttribute('x2', d.arrowX);
     svgLine.setAttribute('y2', d.arrowY);
-    svgArrowText.setAttribute('x', d.arrowX - 20);
-    svgArrowText.setAttribute('y', d.arrowY + 20);
+
+    // 箭頭線仍在 translate(0,250) rotate(-90) 的群組內（沿用原始直式座標即可自動轉正）。
+    // 箭頭文字則獨立放在群組外以維持水平好讀，座標需依同一旋轉公式換算：
+    // 外層X = 原始arrowY，外層Y = 250 - 原始arrowX，再加上小偏移避開箭頭尖端。
+    svgArrowText.setAttribute('x', d.arrowY + 8);
+    svgArrowText.setAttribute('y', (250 - d.arrowX) + 3);
     svgArrowText.textContent = d.arrowText;
   }
 }
