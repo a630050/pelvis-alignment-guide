@@ -1,0 +1,2499 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>何訓誠老師 推髖法操作示範與人體結構解析 — 成果發表投影系統</title>
+<script src="three.min.js"></script>
+<script src="OrbitControls.js"></script>
+<script src="GLTFLoader.js"></script>
+<script>
+// Fallback to CDN if local files fail
+if (typeof THREE === 'undefined') {
+  document.write('<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"><\/script>');
+}
+</script>
+<script>
+if (typeof THREE !== 'undefined' && typeof THREE.OrbitControls === 'undefined') {
+  document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.js"><\/script>');
+}
+</script>
+<script>
+if (typeof THREE !== 'undefined' && typeof THREE.GLTFLoader === 'undefined') {
+  document.write('<script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/loaders/GLTFLoader.js"><\/script>');
+}
+</script>
+<script src="pelvis_model.js"></script>
+<style>
+:root {
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --font-h1: clamp(22px, 2.0vw, 30px);
+  --font-h2: clamp(16px, 1.25vw, 20px);
+  --font-body: clamp(13px, 0.95vw, 15px);
+  --font-small: clamp(11.5px, 0.8vw, 13px);
+  --bg-primary: #0a0e17;
+  --bg-secondary: #131c2e;
+  --bg-card: rgba(19, 28, 46, 0.85);
+  --accent-gold: #f59e0b;
+  --accent-gold-glow: rgba(245, 158, 11, 0.35);
+  --accent-cyan: #06b6d4;
+  --accent-cyan-glow: rgba(6, 182, 212, 0.35);
+  --accent-red: #ef4444;
+  --accent-green: #10b981;
+  --bone-ivory: #e9dcc3;
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --border-color: rgba(148, 163, 184, 0.18);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  user-select: none;
+}
+
+body {
+  background-color: var(--bg-primary);
+  color: var(--text-main);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Microsoft JhengHei UI", "Microsoft JhengHei", "PingFang TC", sans-serif;
+  font-size: var(--font-body);
+  overflow: hidden;
+  height: 100vh;
+  width: 100vw;
+}
+
+/* 頂部兩段式導航列 */
+header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 94px;
+  background: linear-gradient(180deg, rgba(10, 14, 23, 0.98) 0%, rgba(10, 14, 23, 0.88) 100%);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding: 0 var(--sp-6);
+  z-index: 100;
+}
+
+.header-top-row {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.header-nav-row {
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding-bottom: 4px;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-3);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.logo-badge {
+  background: linear-gradient(135deg, #d97706, #b45309);
+  color: #fff;
+  padding: 3px 9px;
+  border-radius: 6px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  box-shadow: 0 0 10px var(--accent-gold-glow);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.logo-title {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.logo-title .logo-sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.nav-tabs {
+  display: flex;
+  gap: 6px;
+  background: rgba(15, 23, 42, 0.7);
+  padding: 3px;
+  border-radius: 30px;
+  border: 1px solid var(--border-color);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.nav-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-muted);
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.nav-btn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.nav-btn.active {
+  background: linear-gradient(135deg, var(--accent-cyan), #0891b2);
+  color: #fff;
+  box-shadow: 0 0 14px var(--accent-cyan-glow);
+}
+
+.nav-btn .kbd {
+  background: rgba(0, 0, 0, 0.35);
+  padding: 1px 5px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-family: monospace;
+}
+
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--sp-2);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.action-btn {
+  background: rgba(30, 41, 59, 0.7);
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.action-btn:hover {
+  border-color: var(--accent-cyan);
+  color: var(--accent-cyan);
+}
+
+.action-btn.btn-outline-gold {
+  background: rgba(245, 158, 11, 0.08);
+  border: 1px solid var(--accent-gold);
+  color: var(--accent-gold);
+  font-weight: 700;
+}
+
+.action-btn.btn-outline-gold:hover {
+  background: var(--accent-gold);
+  color: #000;
+  box-shadow: 0 0 14px var(--accent-gold-glow);
+}
+
+/* 主內容展示區 */
+main {
+  position: absolute;
+  top: 98px;
+  bottom: 38px;
+  left: 0;
+  right: 0;
+  overflow: hidden;
+}
+
+.slide-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+  padding: var(--sp-4) var(--sp-6);
+  display: flex;
+  flex-direction: column;
+}
+
+.slide-section.active {
+  opacity: 1;
+  visibility: visible;
+  z-index: 10;
+}
+
+/* 網格分欄佈局 */
+.content-grid-2 {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  gap: var(--sp-6);
+  height: 100%;
+}
+
+.content-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--sp-4);
+  height: 100%;
+}
+
+.panel {
+  background: var(--bg-card);
+  border: 1px solid var(--border-color);
+  border-radius: 14px;
+  padding: var(--sp-4) var(--sp-6);
+  display: flex;
+  flex-direction: column;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+  overflow-y: auto;
+}
+
+.panel-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--sp-3);
+  padding-bottom: var(--sp-2);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.panel-title {
+  font-size: var(--font-h2);
+  font-weight: 700;
+  color: var(--accent-gold);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.panel-tag {
+  background: rgba(6, 182, 212, 0.12);
+  color: var(--accent-cyan);
+  border: 1px solid rgba(6, 182, 212, 0.6);
+  font-size: 11.5px;
+  padding: 2px 9px;
+  border-radius: 12px;
+  font-weight: 600;
+}
+
+/* 3D 視覺視窗 */
+#canvas-container {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  background: radial-gradient(circle at center, #172235 0%, #070a12 100%);
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+}
+
+#three-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.canvas-hud {
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  background: rgba(10, 14, 23, 0.82);
+  backdrop-filter: blur(8px);
+  padding: 7px 12px;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  font-size: 12px;
+  color: var(--text-muted);
+  max-width: 290px;
+  pointer-events: none;
+  z-index: 15;
+}
+
+.canvas-hud-title {
+  font-weight: 700;
+  color: #fff;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.canvas-hud-sub {
+  font-size: 11px;
+  color: var(--text-muted);
+  margin-top: 2px;
+}
+
+#model-status-tag {
+  margin-top: 4px;
+  font-size: 11.5px;
+  font-weight: 600;
+  color: var(--accent-cyan);
+}
+
+#canvas-toast {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(15, 23, 42, 0.92);
+  border: 1px solid var(--accent-green);
+  color: #fff;
+  padding: 7px 15px;
+  border-radius: 8px;
+  font-size: 12.5px;
+  font-weight: 600;
+  box-shadow: 0 4px 20px rgba(16, 185, 129, 0.35);
+  backdrop-filter: blur(8px);
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+  z-index: 30;
+}
+
+#canvas-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.canvas-controls-bar {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 8px;
+  background: rgba(10, 14, 23, 0.88);
+  backdrop-filter: blur(12px);
+  padding: 5px 12px;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+  z-index: 20;
+  max-width: 95%;
+  flex-wrap: nowrap;
+}
+
+.sim-btn {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-main);
+  padding: 5px 13px;
+  border-radius: 18px;
+  font-size: 12.5px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.sim-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
+  border-color: var(--accent-cyan);
+}
+
+.sim-btn.active {
+  background: rgba(6, 182, 212, 0.22);
+  border-color: var(--accent-cyan);
+  color: #fff;
+  box-shadow: 0 0 12px var(--accent-cyan-glow);
+}
+
+/* 卡片與列表排版 */
+.concept-card {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.07);
+  border-radius: 10px;
+  padding: 12px 16px;
+  margin-bottom: var(--sp-3);
+  transition: all 0.25s ease;
+  position: relative;
+  cursor: pointer;
+}
+
+.concept-card:hover {
+  border-color: var(--accent-cyan);
+  background: rgba(6, 182, 212, 0.05);
+  transform: translateX(3px);
+}
+
+.concept-card.active-point {
+  border-color: var(--accent-gold);
+  background: rgba(245, 158, 11, 0.08);
+  box-shadow: 0 0 14px var(--accent-gold-glow);
+}
+
+/* Slide 2 卡片色條連動 */
+.concept-card.part-pelvis { border-left: 4px solid var(--accent-cyan); }
+.concept-card.part-si { border-left: 4px solid var(--accent-gold); }
+.concept-card.part-lumbar { border-left: 4px solid #a855f7; }
+.concept-card.part-femur { border-left: 4px solid #f97316; }
+
+.desc-2lines {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: var(--font-body);
+  line-height: 1.6;
+}
+
+.concept-card.active-point .desc-2lines,
+.concept-card:hover .desc-2lines {
+  -webkit-line-clamp: 4;
+}
+
+.card-number {
+  position: absolute;
+  right: 14px;
+  top: 10px;
+  font-size: 24px;
+  font-weight: 800;
+  color: rgba(255, 255, 255, 0.07);
+}
+
+.concept-title {
+  font-size: var(--font-h2);
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.concept-title .tag-num {
+  background: var(--accent-gold);
+  color: #000;
+  font-size: 11px;
+  font-weight: 800;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.concept-desc {
+  font-size: var(--font-body);
+  color: var(--text-muted);
+  line-height: 1.6;
+}
+
+.highlight-text {
+  color: var(--accent-gold);
+  font-weight: 600;
+}
+
+.cyan-text {
+  color: var(--accent-cyan);
+  font-weight: 600;
+}
+
+.latin-term {
+  font-weight: 400;
+  opacity: 0.75;
+  font-size: 0.88em;
+}
+
+/* 巨幕重點文字呼叫 HUD */
+#spotlight-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(3, 7, 18, 0.88);
+  backdrop-filter: blur(16px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+#spotlight-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.spotlight-box {
+  background: linear-gradient(145deg, rgba(26, 38, 57, 0.95), rgba(12, 18, 30, 0.98));
+  border: 2px solid var(--accent-gold);
+  border-radius: 24px;
+  padding: clamp(22px, 3.5vh, 36px) clamp(24px, 4vw, 50px);
+  max-width: 850px;
+  max-height: 88vh;
+  overflow-y: auto;
+  width: 90%;
+  box-shadow: 0 0 60px rgba(245, 158, 11, 0.35), inset 0 0 30px rgba(245, 158, 11, 0.15);
+  text-align: center;
+  transform: scale(0.92);
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+#spotlight-overlay.show .spotlight-box {
+  transform: scale(1);
+}
+
+.spotlight-tag {
+  display: inline-block;
+  background: var(--accent-gold);
+  color: #000;
+  font-size: 14px;
+  font-weight: 800;
+  padding: 5px 18px;
+  border-radius: 20px;
+  margin-bottom: 18px;
+  letter-spacing: 2px;
+}
+
+.spotlight-main-title {
+  font-size: clamp(30px, 3.2vw, 42px);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 24px;
+  text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+}
+
+.spotlight-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  text-align: left;
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.spotlight-item {
+  font-size: clamp(18px, 1.8vw, 24px);
+  font-weight: 700;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 14px 24px;
+  border-radius: 12px;
+  color: #f8fafc;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+}
+
+.spotlight-item .item-badge {
+  background: linear-gradient(135deg, var(--accent-cyan), #0284c7);
+  color: #fff;
+  width: 38px;
+  height: 38px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 18px;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.spotlight-item .item-text {
+  flex-grow: 1;
+}
+
+.spotlight-item .item-sub {
+  font-size: 15px;
+  color: var(--accent-gold);
+  font-weight: 500;
+}
+
+.spotlight-close-tip {
+  margin-top: 28px;
+  font-size: 13px;
+  color: var(--text-muted);
+}
+
+.spotlight-close-tip kbd {
+  background: rgba(255, 255, 255, 0.15);
+  padding: 2px 7px;
+  border-radius: 4px;
+  color: #fff;
+  font-family: monospace;
+}
+
+/* 底部狀態列 */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 38px;
+  background: rgba(10, 14, 23, 0.95);
+  border-top: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 var(--sp-6);
+  font-size: 12px;
+  color: var(--text-muted);
+  z-index: 100;
+}
+
+.footer-keys {
+  display: flex;
+  gap: 14px;
+}
+
+.footer-key-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.footer-key-item kbd {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 2px 6px;
+  border-radius: 4px;
+  color: #fff;
+  font-family: monospace;
+}
+
+/* 捲軸美化 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(10, 14, 23, 0.4);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(148, 163, 184, 0.25);
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(148, 163, 184, 0.45);
+}
+
+/* 圖片燈箱展示 */
+.media-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 14px;
+  padding-top: 6px;
+}
+
+.gallery-thumb {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: all 0.25s;
+  position: relative;
+}
+
+.gallery-thumb:hover {
+  border-color: var(--accent-cyan);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(6, 182, 212, 0.25);
+}
+
+.gallery-thumb img {
+  width: 100%;
+  height: 145px;
+  object-fit: cover;
+  display: block;
+}
+
+.gallery-thumb .label {
+  padding: 8px 10px;
+  font-size: 12.5px;
+  font-weight: 600;
+  color: #e2e8f0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+#lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.25s ease;
+}
+
+#lightbox.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+#lightbox img {
+  max-width: 90vw;
+  max-height: 85vh;
+  border-radius: 8px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.8);
+}
+
+/* 響應與投影機常見解析度調適 (1280x720, 1024x768) */
+@media (max-width: 1440px) {
+  .nav-btn {
+    padding: 5px 11px;
+    font-size: 12.5px;
+  }
+}
+
+@media (max-width: 1280px) {
+  .slide-section {
+    padding: var(--sp-3) var(--sp-4);
+  }
+  .content-grid-2 {
+    grid-template-columns: 1.15fr 0.85fr;
+    gap: var(--sp-4);
+  }
+}
+
+@media (max-width: 1024px) {
+  .content-grid-2 {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+  .slide-section {
+    padding: var(--sp-2) var(--sp-3);
+  }
+  #slide-2 > div {
+    flex-direction: column !important;
+  }
+  #slide-2 #canvas-container {
+    min-height: 380px;
+  }
+}
+
+@media (max-height: 768px) {
+  header {
+    height: 82px;
+  }
+  .header-top-row {
+    height: 44px;
+  }
+  .header-nav-row {
+    height: 38px;
+  }
+  main {
+    top: 86px;
+    bottom: 32px;
+  }
+  footer {
+    height: 32px;
+    padding: 0 var(--sp-4);
+  }
+  .panel {
+    padding: var(--sp-3) var(--sp-4);
+  }
+  .panel-header {
+    margin-bottom: var(--sp-2);
+    padding-bottom: var(--sp-2);
+  }
+  .concept-card {
+    padding: 8px 12px;
+    margin-bottom: 8px;
+  }
+  .canvas-controls-bar {
+    bottom: 10px;
+    padding: 4px 10px;
+  }
+  .sim-btn {
+    padding: 4px 10px;
+    font-size: 11.5px;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- 頂部選單導航 -->
+<header>
+  <div class="header-top-row">
+    <div class="logo-area">
+      <div class="logo-badge">歲末成果發表</div>
+      <div class="logo-title">推髖法成果發表 <span class="logo-sub">・何訓誠老師操作示範</span></div>
+    </div>
+    <div class="header-actions">
+      <button class="action-btn btn-outline-gold" onclick="callSpotlight('fivePoints')">📢 五重點 Q</button>
+      <button class="action-btn btn-outline-gold" onclick="callSpotlight('threeRules')">📢 三要則 W</button>
+      <button class="action-btn" onclick="toggleFullscreen()">⛶ 全螢幕 (F)</button>
+    </div>
+  </div>
+
+  <div class="header-nav-row">
+    <nav class="nav-tabs">
+      <button class="nav-btn active" onclick="switchSlide(0)" title="核心原理與力學"><span class="kbd">F1</span> 核心原理</button>
+      <button class="nav-btn" onclick="switchSlide(1)" title="五體投地俯臥評估"><span class="kbd">F2</span> 俯臥評估</button>
+      <button class="nav-btn" onclick="switchSlide(2)" title="3D骨盆結構與歪斜"><span class="kbd">F3</span> 3D骨盆</button>
+      <button class="nav-btn" onclick="switchSlide(3)" title="推髖關節五大重點"><span class="kbd">F4</span> 五大重點</button>
+      <button class="nav-btn" onclick="switchSlide(4)" title="薦髂三角與骨縫探查"><span class="kbd">F5</span> 薦髂三角</button>
+      <button class="nav-btn" onclick="switchSlide(5)" title="推髖三要則與心法"><span class="kbd">F6</span> 三要則</button>
+      <button class="nav-btn" onclick="switchSlide(6)" title="課堂圖庫與影片"><span class="kbd">F7</span> 圖庫影片</button>
+    </nav>
+  </div>
+</header>
+
+<!-- 主視窗投影片區 -->
+<main>
+
+  <!-- Slide 0: 核心原理與力學 -->
+  <section class="slide-section active" id="slide-0">
+    <div class="content-grid-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">💡 何訓誠老師「推髖法」核心正骨理念</div>
+          <div class="panel-tag">歲末示範講解</div>
+        </div>
+        
+        <div class="concept-card active-point" onclick="callSpotlight('concept')">
+          <div class="card-number">01</div>
+          <div class="concept-title"><span class="tag-num">法</span> 推動鬆動・順勢正骨</div>
+          <div class="concept-desc">
+            推髖法並非以死力硬扳骨骼，而是透過於髖部幾個關鍵結構點（髂脊、大轉子、坐骨、髂後上/下脊）精確施力，<span class="highlight-text">推開關節間隙、鬆解緊張筋膜與深層筋結</span>，讓錯位骨盆順應人體力學自然歸位。
+          </div>
+        </div>
+
+        <div class="concept-card" onclick="callSpotlight('physics')">
+          <div class="card-number">02</div>
+          <div class="concept-title"><span class="tag-num">理</span> 牛頓第三運動定律（作用力與反作用力）</div>
+          <div class="concept-desc">
+            人體骨盆因跌撞摔擊（如影片中所述之舊傷、骨盆板塊擠壓）產生錯位，整復推髖時運用<span class="cyan-text">物理反方向推力順勢回推</span>，在骨骼承受力的反方向建立施力動能，以柔克剛化解卡鎖。
+          </div>
+        </div>
+
+        <div class="concept-card">
+          <div class="card-number">03</div>
+          <div class="concept-title"><span class="tag-num">技</span> 核心動能前送・手臂打直為槓桿</div>
+          <div class="concept-desc">
+            施術者站姿步伐必須扎穩，<span class="highlight-text">手肘務必打直</span>形成剛性槓桿，嚴禁單靠手臂肌肉或手腕死推。出力完全源自於施術者身體核心重心的輕柔前送（形成支點、施力點、受力點的完整動力鏈），保護施術者關節不勞損。
+          </div>
+        </div>
+
+        <div class="concept-card">
+          <div class="card-number">04</div>
+          <div class="concept-title"><span class="tag-num">心</span> 身體與骨骼對話・感受律動</div>
+          <div class="concept-desc">
+            推動時保持輕柔緩慢，用心感受患者關節共振與筋膜呼吸。當關節間隙被推開時，骨盆運動律動會由「緊繃卡住」轉為「滑順輕盈」，切忌過猛用力引起患者肌肉反射性防禦對抗。
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%); align-items: center; justify-content: center; text-align: center;">
+        <div style="font-size: 15px; color: var(--accent-cyan); font-weight: 700; margin-bottom: 12px; letter-spacing: 2px;">現場示範核心架構</div>
+        <div style="font-size: 32px; font-weight: 800; color: #fff; line-height: 1.4; margin-bottom: 24px;">
+          髖為底座・脊柱中樑<br>
+          <span style="color: var(--accent-gold);">一推鬆動・筋骨合槽</span>
+        </div>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; width: 100%; max-width: 460px; text-align: left;">
+          <div style="background: rgba(255,255,255,0.05); padding: 14px 18px; border-radius: 10px; border-left: 4px solid var(--accent-gold);">
+            <div style="color: var(--accent-gold); font-weight: 700; font-size: 15px;">三點支撐架構</div>
+            <div style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">支點、施力點、受力點形成穩固力矩</div>
+          </div>
+          <div style="background: rgba(255,255,255,0.05); padding: 14px 18px; border-radius: 10px; border-left: 4px solid var(--accent-cyan);">
+            <div style="color: var(--accent-cyan); font-weight: 700; font-size: 15px;">動態回饋監測</div>
+            <div style="color: var(--text-muted); font-size: 13px; margin-top: 4px;">隨時觀察腳跟對稱、臀型與呼吸</div>
+          </div>
+        </div>
+
+        <div style="margin-top: 30px; display: flex; gap: 14px;">
+          <button class="action-btn hotkey-prompt" style="padding: 12px 24px; font-size: 15px;" onclick="switchSlide(2)">👉 進入 3D 骨盆力學模擬</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 1: 五體投地俯臥評估法 -->
+  <section class="slide-section" id="slide-1">
+    <div class="content-grid-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">👁️ 俯臥望診——「五體投地」評估法</div>
+          <div class="panel-tag">精準觸診前必備</div>
+        </div>
+
+        <p style="color: var(--text-muted); font-size: 14px; margin-bottom: 16px; line-height: 1.6;">
+          患者自然放鬆趴在整復床上，不刻意擺正。此時身體呈現最真實的失衡歪斜狀態，從頭到腳觀察五大連鎖指標：
+        </p>
+
+        <div class="concept-card">
+          <div class="card-number">1</div>
+          <div class="concept-title"><span class="tag-num">1</span> 身體中軸線偏斜</div>
+          <div class="concept-desc">整復床為固定基準，觀察脊柱與軀幹是否偏離床台中軸線（影片示範個案向左傾斜達 15 度）。</div>
+        </div>
+
+        <div class="concept-card">
+          <div class="card-number">2</div>
+          <div class="concept-title"><span class="tag-num">2</span> 腳跟與小腿側傾外翻</div>
+          <div class="concept-desc">雙腳腳跟未平行，單側腳跟向外側傾斜，帶動整隻小腿與足踝旋轉，反映髖關節深層卡住。</div>
+        </div>
+
+        <div class="concept-card">
+          <div class="card-number">3</div>
+          <div class="concept-title"><span class="tag-num">3</span> 臀部兩側外形對比：月餅 vs 小籠包</div>
+          <div class="concept-desc">
+            <span class="highlight-text">「月餅面」</span>：受擠壓頂高、大面積平坦隆起（受撞擊板塊上移）；<br>
+            <span class="cyan-text">「小籠包面」</span>：圓潤凸起飽滿。此形狀能判定受傷摔撞機制與施力先後順序。
+          </div>
+        </div>
+
+        <div class="concept-card">
+          <div class="card-number">4</div>
+          <div class="concept-title"><span class="tag-num">4</span> 骨盆大轉子跑位與連鎖長短腳</div>
+          <div class="concept-desc">大轉子外突或上提，導致下肢骨架被動牽拉，俯臥時兩腳腳後跟高低落差（相差二至三指）。</div>
+        </div>
+
+        <div class="concept-card">
+          <div class="card-number">5</div>
+          <div class="concept-title"><span class="tag-num">5</span> 肩胛骨高低差與頸椎代償線</div>
+          <div class="concept-desc">骨盆側傾必引發上身代償，左骨盆上提常伴隨左肩胛骨頂起、高低肩，甚至後頸髮際連線傾斜。</div>
+        </div>
+      </div>
+
+      <div class="panel" style="background: rgba(15, 23, 42, 0.95); justify-content: space-around;">
+        <div style="text-align: center;">
+          <div style="font-size: 18px; font-weight: 700; color: var(--accent-gold); margin-bottom: 8px;">全身骨架骨盆連鎖代償示意圖</div>
+          <div style="font-size: 13px; color: var(--text-muted);">骨盆歪斜不是局部問題，而是牽一髮動全身的整體力學失衡</div>
+        </div>
+
+        <!-- SVG 示意全身連鎖代償 -->
+        <svg viewBox="0 0 420 480" style="max-height: 380px; width: 100%; margin: 10px auto;">
+          <defs>
+            <style>
+              .svg-label { font-family: -apple-system, BlinkMacSystemFont, "Microsoft JhengHei UI", sans-serif; font-weight: bold; paint-order: stroke fill; stroke: #0a0e17; stroke-width: 5px; stroke-linejoin: round; }
+            </style>
+          </defs>
+          <!-- 垂直中軸基準虛線 -->
+          <line x1="210" y1="20" x2="210" y2="460" stroke="#475569" stroke-width="2.5" stroke-dasharray="6,6"/>
+          <text x="218" y="38" fill="#94a3b8" font-size="14" class="svg-label">床台垂直中軸線</text>
+
+          <!-- 歪斜中軸實線 -->
+          <path d="M 200 40 Q 225 160 195 260 T 225 440" fill="none" stroke="#ef4444" stroke-width="3"/>
+          <text x="232" y="160" fill="#ef4444" font-size="14" class="svg-label">傾斜代償中軸 ↗</text>
+
+          <!-- 枕骨 / 頭部 -->
+          <circle cx="200" cy="50" r="24" fill="none" stroke="#94a3b8" stroke-width="2"/>
+          <line x1="175" y1="46" x2="225" y2="54" stroke="#f59e0b" stroke-width="3"/>
+          <text x="232" y="55" fill="#f59e0b" font-size="14" class="svg-label">⑤ 枕骨/頸椎偏歪</text>
+
+          <!-- 雙肩 (高低肩) -->
+          <line x1="130" y1="120" x2="280" y2="145" stroke="#ef4444" stroke-width="4"/>
+          <circle cx="130" cy="120" r="6" fill="#ef4444"/>
+          <circle cx="280" cy="145" r="6" fill="#ef4444"/>
+          <text x="25" y="125" fill="#ef4444" font-size="15" class="svg-label">左肩偏高 ⬆</text>
+          <text x="290" y="152" fill="#94a3b8" font-size="14" class="svg-label">右肩偏低 ⬇</text>
+
+          <!-- 脊椎 (側彎代償) -->
+          <path d="M 200 74 C 230 130, 170 190, 205 240" fill="none" stroke="#06b6d4" stroke-width="4" stroke-dasharray="4,2"/>
+
+          <!-- 骨盆 (左高右低，向左側傾) -->
+          <polygon points="130,240 270,265 250,310 150,295" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" stroke-width="3"/>
+          <circle cx="130" cy="240" r="7" fill="#f59e0b"/>
+          <circle cx="270" cy="265" r="7" fill="#f59e0b"/>
+          <text x="12" y="246" fill="#f59e0b" font-size="15" class="svg-label">左骨盆上提(月餅面)</text>
+          <text x="280" y="272" fill="#94a3b8" font-size="14" class="svg-label">右骨盆下沉</text>
+
+          <!-- 兩腿 (長短腳) -->
+          <!-- 左腿 (短腳) -->
+          <line x1="150" y1="295" x2="160" y2="420" stroke="#94a3b8" stroke-width="5"/>
+          <circle cx="160" cy="420" r="8" fill="#ef4444"/>
+          <text x="18" y="426" fill="#ef4444" font-size="15" class="svg-label">左腳功能性短腳</text>
+
+          <!-- 右腿 (長腳) -->
+          <line x1="250" y1="310" x2="245" y2="445" stroke="#94a3b8" stroke-width="5"/>
+          <circle cx="245" cy="445" r="8" fill="#10b981"/>
+          <text x="260" y="452" fill="#10b981" font-size="14" class="svg-label">長腳 (落差約2~3指)</text>
+        </svg>
+
+        <div style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); text-align: center; font-size: 13px;">
+          📌 <span class="highlight-text">現場判定準則</span>：先判定歪斜高點與受力板塊，決定第一施力點，切勿盲目兩邊硬推！
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 2: 3D 骨盆立體力學展示與歪斜模擬 -->
+  <section class="slide-section" id="slide-2">
+    <div style="display: flex; gap: 20px; height: 100%;">
+      <!-- 左側 3D Canvas -->
+      <div style="flex: 1.4; position: relative;">
+        <div id="canvas-container">
+          <canvas id="three-canvas"></canvas>
+          <div class="canvas-hud">
+            <div class="canvas-hud-title"><span>🦴</span> 3D 骨盆與脊椎動態模型</div>
+            <div class="canvas-hud-sub">左鍵旋轉 | 右鍵平移 | 滾輪縮放視角</div>
+            <div id="model-status-tag">目前模式：正常中立位 (Neutral)</div>
+          </div>
+          <div id="canvas-toast">✅ 復位完成！骨盆恢復對稱水平</div>
+
+          <div class="canvas-controls-bar">
+            <button class="sim-btn active" id="btn-mode-neutral" onclick="setPelvisMode('neutral')">
+              <span>🟢</span> 正常對稱位
+            </button>
+            <button class="sim-btn" id="btn-mode-skewed" onclick="setPelvisMode('skewed')">
+              <span>⚠️</span> 骨盆歪斜態
+            </button>
+            <button class="sim-btn" id="btn-mode-reduce" onclick="triggerReductionAnimation()">
+              <span>🔄</span> 推髖動態復位
+            </button>
+            <button class="sim-btn" onclick="reset3DCamera()">
+              <span>🎯</span> 鏡頭重置
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 右側 解說與連動面板 -->
+      <div style="flex: 1;" class="panel">
+        <div class="panel-header">
+          <div class="panel-title">🧩 3D 解剖點與歪斜機制解析</div>
+          <div class="panel-tag">點擊卡片聚焦 3D</div>
+        </div>
+
+        <div id="three-detail-box">
+          <div class="concept-card part-pelvis active-point" onclick="focus3DPart('pelvis')">
+            <div class="concept-title"><span class="tag-num">P</span> 骨盆核心平衡架構 <span class="latin-term">(Pelvis Ring)</span></div>
+            <div class="concept-desc desc-2lines">
+              由左右兩塊<span class="cyan-text">髂骨 (Ilium)</span>與中央<span class="highlight-text">薦骨 (Sacrum)</span>構成環形穩定結構。當受外力撞擊或長期習慣不良時，薦髂關節韌帶被拉扯，骨盆發生旋轉錯位（前旋/後旋/側傾）。
+            </div>
+          </div>
+
+          <div class="concept-card part-si" onclick="focus3DPart('si_joint')">
+            <div class="concept-title"><span class="tag-num">S</span> 薦髂關節緊咬卡鎖 <span class="latin-term">(SI Joint)</span></div>
+            <div class="concept-desc desc-2lines">
+              薦髂關節是人體承重的樞紐，活動度僅 2~4 度。一旦卡住，整個脊柱與下肢將失去緩衝，引發腰薦疼痛、坐骨神經壓迫及臀部肌肉攣縮（小珠珠筋結）。
+            </div>
+          </div>
+
+          <div class="concept-card part-lumbar" onclick="focus3DPart('lumbar')">
+            <div class="concept-title"><span class="tag-num">L</span> 腰椎代償性側彎 <span class="latin-term">(Lumbar Compensation)</span></div>
+            <div class="concept-desc desc-2lines">
+              骨盆底座一旦傾斜，腰椎第五節 (L5) 與第四節 (L4) 為了維持頭部水平視線，被迫向對側代償側彎與旋轉，造成腰肌兩側張力極度不對稱。
+            </div>
+          </div>
+
+          <div class="concept-card part-femur" onclick="focus3DPart('femur')">
+            <div class="concept-title"><span class="tag-num">F</span> 大轉子偏位與長短腳 <span class="latin-term">(Greater Trochanter)</span></div>
+            <div class="concept-desc desc-2lines">
+              股骨頸大轉子隨髂骨旋轉向前外側或後外側移位，連帶影響膝關節力線與足部外翻，形成外觀顯著的「假性長短腳」。
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: auto; padding: 12px; background: rgba(6, 182, 212, 0.08); border: 1px dashed var(--accent-cyan); border-radius: 10px; font-size: 12.5px; color: var(--text-muted);">
+          💡 <span class="cyan-text">互動操作</span>：點選「骨盆歪斜態」觀察左骨盆高提與脊柱代償；點選「推髖動態復位」體驗施力回槽動態。
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 3: 推髖關節五大重點部位 -->
+  <section class="slide-section" id="slide-3">
+    <div class="content-grid-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">🎯 何訓誠老師「推髖關節五個重點」</div>
+          <div class="panel-tag">按 1~5 鍵即時切換</div>
+        </div>
+
+        <div class="concept-card active-point" id="pt-card-1" onclick="selectPoint(1)">
+          <div class="card-number">1</div>
+          <div class="concept-title"><span class="tag-num">1</span> 髂後上脊 (PSIS)</div>
+          <div class="concept-desc">
+            <b>解剖定位：</b>臀部上緣兩側顯著骨性凹窩（維納斯之眼深處）。<br>
+            <b>推動作用：</b>薦髂關節核心上錨點，推動此點可直接鬆解薦骨與髂骨上部嵌頓，調節 S1 骨縫緊繃。
+          </div>
+        </div>
+
+        <div class="concept-card" id="pt-card-2" onclick="selectPoint(2)">
+          <div class="card-number">2</div>
+          <div class="concept-title"><span class="tag-num">2</span> 髂後下脊 (PIIS)</div>
+          <div class="concept-desc">
+            <b>解剖定位：</b>沿 PSIS 垂直向下約 2~3 公分骨緣處。<br>
+            <b>推動作用：</b>薦骨粗隆韌帶附著點，推動此處能鬆開薦髂關節下緣卡鎖，解除臀深部壓迫感。
+          </div>
+        </div>
+
+        <div class="concept-card" id="pt-card-3" onclick="selectPoint(3)">
+          <div class="card-number">3</div>
+          <div class="concept-title"><span class="tag-num">3</span> 大轉子 (Greater Trochanter)</div>
+          <div class="concept-desc">
+            <b>解剖定位：</b>髖部最外側最高骨性凸起。<br>
+            <b>推動作用：</b>髖關節外側核心力臂點，若大轉子向外跑位，推動此處能旋轉股骨頭回納入髖臼，矯正下肢旋轉與長短腳。
+          </div>
+        </div>
+
+        <div class="concept-card" id="pt-card-4" onclick="selectPoint(4)">
+          <div class="card-number">4</div>
+          <div class="concept-title"><span class="tag-num">4</span> 坐骨 / 坐骨結節 (Ischium)</div>
+          <div class="concept-desc">
+            <b>解剖定位：</b>臀橫紋深處、坐姿承重骨結節。<br>
+            <b>推動作用：</b>骨盆底後下支撐點，若骨盆後傾或骨板受壓，由坐骨結節順勢前推，使骨盆板塊重新展平。
+          </div>
+        </div>
+
+        <div class="concept-card" id="pt-card-5" onclick="selectPoint(5)">
+          <div class="card-number">5</div>
+          <div class="concept-title"><span class="tag-num">5</span> 髂脊上端 (Iliac Crest Upper Border)</div>
+          <div class="concept-desc">
+            <b>解剖定位：</b>側腰部最高之髂骨弧形上緣（兩側最高點連線平對 L4 棘突）。<br>
+            <b>推動作用：</b>骨盆頂部最高控制點，掌根鎖定此處向前下方深送，能帶動整個骨盆翼旋轉正位。
+          </div>
+        </div>
+      </div>
+
+      <!-- 右側 詳解與施力圖示 -->
+      <div class="panel" style="background: rgba(15, 23, 42, 0.95); justify-content: space-between;">
+        <div class="panel-header">
+          <div class="panel-title" id="point-detail-title">📍 重點一：髂後上脊 (PSIS) 施術要領</div>
+          <div class="panel-tag" id="point-detail-tag">按鍵 [1]</div>
+        </div>
+
+        <div id="point-detail-body" style="line-height: 1.8; font-size: 15px; color: #e2e8f0;">
+          <div style="background: rgba(245, 158, 11, 0.1); border-left: 4px solid var(--accent-gold); padding: 14px 18px; border-radius: 8px; margin-bottom: 20px;">
+            <div style="font-weight: 700; color: var(--accent-gold); margin-bottom: 4px;">施力手法與方向</div>
+            <div id="point-detail-force">掌根或大魚際抵住髂後上脊內側緣，順應薦骨弧度向外下方以波浪律動緩慢推送。</div>
+          </div>
+
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 20px;">
+            <div style="background: rgba(255,255,255,0.04); padding: 12px; border-radius: 8px;">
+              <div style="color: var(--accent-cyan); font-weight: 700; font-size: 13px;">觸診特徵</div>
+              <div id="point-detail-touch" style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">常可摸到懸崖邊之隆起硬結或骨縫落差。</div>
+            </div>
+            <div style="background: rgba(255,255,255,0.04); padding: 12px; border-radius: 8px;">
+              <div style="color: var(--accent-gold); font-weight: 700; font-size: 13px;">臨床連鎖改善</div>
+              <div id="point-detail-relief" style="font-size: 13px; color: var(--text-muted); margin-top: 4px;">解除同側腰臀牽拉感，即刻改善雙腿長短差。</div>
+            </div>
+          </div>
+
+          <!-- 解剖向量圖 -->
+          <svg viewBox="0 0 360 200" style="width: 100%; height: 180px; background: rgba(0,0,0,0.3); border-radius: 10px; border: 1px solid var(--border-color);">
+            <rect width="360" height="200" fill="transparent"/>
+            <!-- 骨盆背側示意 -->
+            <path d="M 60 70 Q 180 30 300 70 Q 330 140 280 180 Q 180 160 80 180 Z" fill="rgba(6, 182, 212, 0.15)" stroke="#06b6d4" stroke-width="2"/>
+            <!-- 薦骨倒三角 -->
+            <polygon points="180,50 140,160 220,160" fill="rgba(245, 158, 11, 0.2)" stroke="#f59e0b" stroke-width="2"/>
+            
+            <!-- 動態標記點 -->
+            <circle id="svg-mark-point" cx="140" cy="75" r="10" fill="#ef4444" stroke="#fff" stroke-width="2">
+              <animate attributeName="r" values="8;13;8" dur="1.5s" repeatCount="indefinite"/>
+            </circle>
+            <text id="svg-mark-text" x="160" y="80" fill="#fff" font-size="14" font-weight="bold">1. 髂後上脊 (PSIS)</text>
+
+            <!-- 施力方向箭頭 -->
+            <line id="svg-arrow-line" x1="140" y1="75" x2="110" y2="120" stroke="#f59e0b" stroke-width="4" marker-end="url(#arrow)"/>
+            <text id="svg-arrow-text" x="70" y="140" fill="#f59e0b" font-size="12">施力方向 ↘</text>
+          </svg>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; align-items: center; padding-top: 10px;">
+          <button class="action-btn" onclick="prevPoint()">⬅ 上一個重點</button>
+          <span style="font-size: 13px; color: var(--text-muted);">使用鍵盤數字鍵 <kbd>1</kbd> ~ <kbd>5</kbd> 快速切換</span>
+          <button class="action-btn" onclick="nextPoint()">下一個重點 ➡</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 4: 薦髂三角基準點與骨縫懸崖邊探查 -->
+  <section class="slide-section" id="slide-4">
+    <div class="content-grid-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">📐 薦髂關節「三角基準點」與定位</div>
+          <div class="panel-tag">影片核心技法</div>
+        </div>
+
+        <div class="concept-card active-point">
+          <div class="concept-title"><span class="tag-num">▲</span> 薦椎等腰三角基準點構建</div>
+          <div class="concept-desc">
+            以雙側<span class="highlight-text">「髂後上脊 (PSIS)」</span>兩點為底邊頂點，向下至<span class="cyan-text">「尾骨 (Coccyx)」</span>尖端連線，構成一個精確的等腰三角形。
+          </div>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-title"><span class="tag-num">S3</span> 等腰三角形中心樞紐——S3 定位</div>
+          <div class="concept-desc">
+            三角形的幾何中心點恰為薦椎第三節 (S3) 穴位區。以此為原點向上下沿線探尋，能精確對齊薦骨中軸線，判斷薦骨有無偏歪、旋轉或翹起。
+          </div>
+        </div>
+
+        <div class="concept-card">
+          <div class="card-number">Cliff</div>
+          <div class="concept-title"><span class="tag-num">縫</span> 骨縫「懸崖邊」與深層筋結（小珠珠）</div>
+          <div class="concept-desc">
+            從 PSIS 往下摸到薦髂關節交界骨縫，老師比喻為<span class="highlight-text">「懸崖邊」</span>。在懸崖落差邊緣以指腹或掌根觸摸，常有卡滯之硬塊、筋結（老師稱之為「小珠珠」、「大珠珠」），必須沿骨縫懸崖逐一撥開推鬆。
+          </div>
+        </div>
+
+        <div class="concept-card">
+          <div class="concept-title"><span class="tag-num">L5</span> 髂脊上端平準線——L4/L5 椎間高程</div>
+          <div class="concept-desc">
+            由兩側髂脊上端最高點橫向水平延伸，為腰椎 L4~L5 棘突平準線。施術時下手的 S1 定位點嚴禁取太高，應位於 PSIS 內下緣，精準區隔腰椎與薦椎。
+          </div>
+        </div>
+      </div>
+
+      <div class="panel" style="background: rgba(15, 23, 42, 0.95); text-align: center; justify-content: center;">
+        <div style="font-size: 18px; font-weight: 700; color: var(--accent-cyan); margin-bottom: 12px;">薦骨等腰三角基準與五大釋放點分佈</div>
+        
+        <svg viewBox="0 0 400 390" style="max-height: 340px; width: 100%; margin: 0 auto;">
+          <defs>
+            <style>
+              .svg-label-f5 { font-family: -apple-system, BlinkMacSystemFont, "Microsoft JhengHei UI", sans-serif; font-weight: bold; paint-order: stroke fill; stroke: #0a0e17; stroke-width: 5px; stroke-linejoin: round; }
+            </style>
+          </defs>
+          <!-- 等腰三角形背景 -->
+          <polygon points="110,80 290,80 200,320" fill="rgba(245, 158, 11, 0.12)" stroke="#f59e0b" stroke-width="2.5" stroke-dasharray="6,4"/>
+
+          <!-- 髂後上脊 PSIS 兩點 -->
+          <circle cx="110" cy="80" r="9" fill="#06b6d4" stroke="#fff" stroke-width="2"/>
+          <text x="22" y="85" fill="#06b6d4" font-size="15" class="svg-label-f5">左 PSIS</text>
+
+          <circle cx="290" cy="80" r="9" fill="#06b6d4" stroke="#fff" stroke-width="2"/>
+          <text x="306" y="85" fill="#06b6d4" font-size="15" class="svg-label-f5">右 PSIS</text>
+
+          <!-- 尾骨尖端 Coccyx -->
+          <circle cx="200" cy="320" r="9" fill="#ef4444" stroke="#fff" stroke-width="2"/>
+          <text x="145" y="358" fill="#ef4444" font-size="15" class="svg-label-f5">尾骨 (等腰三角頂點)</text>
+
+          <!-- 懸崖邊骨縫弧線 -->
+          <path d="M 110 80 Q 140 190 190 300" fill="none" stroke="#f59e0b" stroke-width="3.5"/>
+          <text x="18" y="200" fill="#f59e0b" font-size="14" class="svg-label-f5">左懸崖邊 (骨縫)</text>
+
+          <path d="M 290 80 Q 260 190 210 300" fill="none" stroke="#f59e0b" stroke-width="3.5"/>
+          <text x="268" y="200" fill="#f59e0b" font-size="14" class="svg-label-f5">右懸崖邊 (骨縫)</text>
+
+          <!-- S1 ~ S5 標記點 -->
+          <circle cx="200" cy="110" r="6" fill="#10b981"/>
+          <text x="216" y="115" fill="#cbd5e1" font-size="13" class="svg-label-f5">S1 釋放點</text>
+
+          <circle cx="200" cy="150" r="6" fill="#10b981"/>
+          <text x="216" y="155" fill="#cbd5e1" font-size="13" class="svg-label-f5">S2 釋放點</text>
+
+          <!-- S3 (中心樞紐) -->
+          <circle cx="200" cy="195" r="10" fill="#f59e0b" stroke="#fff" stroke-width="2.5"/>
+          <text x="218" y="200" fill="#f59e0b" font-size="15" class="svg-label-f5">S3 中心點 (筋結好發)</text>
+
+          <circle cx="200" cy="240" r="6" fill="#10b981"/>
+          <text x="216" y="245" fill="#cbd5e1" font-size="13" class="svg-label-f5">S4 釋放點</text>
+
+          <circle cx="200" cy="280" r="6" fill="#10b981"/>
+          <text x="216" y="285" fill="#cbd5e1" font-size="13" class="svg-label-f5">S5 尾骨底</text>
+        </svg>
+
+        <div style="background: rgba(0,0,0,0.4); padding: 10px; border-radius: 8px; font-size: 13px; color: var(--text-muted); margin-top: 10px;">
+          沿著懸崖邊骨縫以「推、撥、滑、壓」手法，將筋結小珠珠推散，骨盤與薦椎自然回正！
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 5: 推髖三要則與操作心法 -->
+  <section class="slide-section" id="slide-5">
+    <div class="content-grid-3">
+      <!-- 角度 -->
+      <div class="panel" style="border-top: 4px solid var(--accent-cyan);">
+        <div class="panel-header">
+          <div class="panel-title" style="color: var(--accent-cyan);">📐 1. 角度 (Angle)</div>
+        </div>
+        <div style="font-size: 15px; line-height: 1.8; color: #cbd5e1;">
+          <p><b class="cyan-text">精準切入角度：</b></p>
+          <p>施術者的施力角度必須與關節面切線形成有效力矩。骨盆為三維空間曲面，不同點位各有角度：</p>
+          <ul style="margin: 12px 0 12px 20px; font-size: 14px;">
+            <li><b>髂脊上端：</b>斜向前下方 45°</li>
+            <li><b>大轉子：</b>沿股骨頸軸線向內上方 30°</li>
+            <li><b>髂後上脊：</b>沿薦髂骨縫向外下方滑送</li>
+          </ul>
+          <div style="background: rgba(6,182,212,0.1); padding: 12px; border-radius: 8px; font-size: 13px; border-left: 3px solid var(--accent-cyan);">
+            嚴禁垂直90度死壓！角度偏差會造成患者骨膜劇痛並引發強烈肌肉抵抗。
+          </div>
+        </div>
+      </div>
+
+      <!-- 方向 -->
+      <div class="panel" style="border-top: 4px solid var(--accent-gold);">
+        <div class="panel-header">
+          <div class="panel-title" style="color: var(--accent-gold);">🧭 2. 方向 (Direction)</div>
+        </div>
+        <div style="font-size: 15px; line-height: 1.8; color: #cbd5e1;">
+          <p><b class="highlight-text">反向作用力原則：</b></p>
+          <p>依據「牛頓第三運動定律」，受傷撞擊通常有明確方向（如滑倒跌坐使骨板前旋上移），推髖整復必須：</p>
+          <ul style="margin: 12px 0 12px 20px; font-size: 14px;">
+            <li>高起凸出面（月餅面）先推，反方向推平</li>
+            <li>牽引帶動骨盆翼由後向前、由外向內合攏</li>
+            <li>一手鎖定對側肩胛骨作為阻抗支點，形成對角交叉引導</li>
+          </ul>
+          <div style="background: rgba(245,158,11,0.1); padding: 12px; border-radius: 8px; font-size: 13px; border-left: 3px solid var(--accent-gold);">
+            順勢而為，反向導引，讓錯位的板塊順著解剖滑軌滑回原槽。
+          </div>
+        </div>
+      </div>
+
+      <!-- 力道 -->
+      <div class="panel" style="border-top: 4px solid var(--accent-green);">
+        <div class="panel-header">
+          <div class="panel-title" style="color: var(--accent-green);">⚡ 3. 力道 (Force)</div>
+        </div>
+        <div style="font-size: 15px; line-height: 1.8; color: #cbd5e1;">
+          <p><b style="color: var(--accent-green);">柔中帶勁・身隨意動：</b></p>
+          <p>影片中老師再三強調：「力道輕輕的就好，太大力患者會不舒服，而且你會找不到它的感覺！」：</p>
+          <ul style="margin: 12px 0 12px 20px; font-size: 14px;">
+            <li>力量來自於<b>施術者全身重心的輕輕前送</b></li>
+            <li>手肘保持伸直，不做局部屈伸推撞</li>
+            <li>以深透綿密的「推、送、揉、撥」化開深層粘連</li>
+          </ul>
+          <div style="background: rgba(16,185,129,0.1); padding: 12px; border-radius: 8px; font-size: 13px; border-left: 3px solid var(--accent-green);">
+            輕柔是為了讓患者神經放鬆，關節間隙一旦鬆動開來，骨頭就自然聽話回正！
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Slide 6: 課堂原始圖庫與參考影片 -->
+  <section class="slide-section" id="slide-6">
+    <div class="content-grid-2">
+      <div class="panel">
+        <div class="panel-header">
+          <div class="panel-title">📚 整復課堂原始講義與照片素材 (點擊看大圖)</div>
+          <div class="panel-tag">素材庫共 12 張</div>
+        </div>
+
+        <div class="media-gallery" id="gallery-container">
+          <!-- 動態載入圖片 -->
+        </div>
+      </div>
+
+      <div class="panel" style="background: rgba(15, 23, 42, 0.95);">
+        <div class="panel-header">
+          <div class="panel-title">🎬 參考課程教學影片（薦髂關節調理復位）</div>
+          <div class="panel-tag">YouTube 影片</div>
+        </div>
+
+        <div style="position: relative; border-radius: 12px; border: 1px solid var(--border-color); overflow: hidden; margin-bottom: 16px; background: #000; box-shadow: 0 8px 24px rgba(0,0,0,0.5);">
+          <!-- 離線高解析度縮圖與播放按鈕卡片 -->
+          <div style="position: relative; width: 100%; aspect-ratio: 16/9; display: flex; align-items: center; justify-content: center; overflow: hidden;">
+            <img src="整復/youtube_thumb.jpg" onerror="this.onerror=null; this.src='youtube_thumb.jpg';" 
+                 alt="何訓誠老師教學影片縮圖" 
+                 style="width: 100%; height: 100%; object-fit: cover; filter: brightness(0.78);">
+            <div style="position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0,0,0,0.2) 0%, rgba(10,14,23,0.85) 100%);"></div>
+            
+            <a href="https://www.youtube.com/watch?v=6v7ZiSidOIA" target="_blank" rel="noopener noreferrer" 
+               style="position: absolute; display: flex; flex-direction: column; align-items: center; text-decoration: none; z-index: 10; transition: transform 0.25s;">
+              <div style="width: 68px; height: 68px; border-radius: 50%; background: linear-gradient(135deg, #ef4444, #b91c1c); display: flex; align-items: center; justify-content: center; box-shadow: 0 0 25px rgba(239,68,68,0.7); margin-bottom: 10px;">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="#ffffff"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              </div>
+              <div style="background: rgba(15,23,42,0.88); border: 1px solid var(--accent-gold); color: #fff; padding: 6px 16px; border-radius: 20px; font-weight: 700; font-size: 14px; box-shadow: 0 4px 12px rgba(0,0,0,0.4);">
+                ▶️ 前往 YouTube 觀看高清完整課程
+              </div>
+            </a>
+          </div>
+          <div style="padding: 10px 14px; background: rgba(15, 23, 42, 0.95); display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--border-color);">
+            <span style="font-size: 12.5px; color: var(--text-muted);">💡 雙擊 HTML 離線環境專用外鏈播放（避免瀏覽器沙盒限制）</span>
+            <a href="https://www.youtube.com/watch?v=6v7ZiSidOIA" target="_blank" rel="noopener noreferrer" 
+               style="color: var(--accent-cyan); font-size: 12.5px; text-decoration: underline; font-weight: 600;">
+              在新視窗開啟 ↗
+            </a>
+          </div>
+        </div>
+
+        <div style="background: rgba(0,0,0,0.3); border-radius: 10px; padding: 14px; border: 1px solid var(--border-color);">
+          <div style="font-weight: 700; color: var(--accent-gold); margin-bottom: 8px;">⏱️ 影片精華實操節點回顧：</div>
+          <div style="font-size: 13px; color: var(--text-muted); line-height: 1.8;">
+            • <b>01:20</b> 俯臥五體投地觀察（中軸歪斜15度、小腿外翻、月餅面與小籠包）<br>
+            • <b>02:30</b> 摔撞板塊判定與推髖五點定位<br>
+            • <b>04:10</b> 施術者站姿與核心重心前送技巧（手肘打直）<br>
+            • <b>05:40</b> 尋找等腰三角基準點與 S3 / 骨縫懸崖邊筋結珠珠<br>
+            • <b>09:15</b> 現場推髖操作（掌骨推髂棘上端、鎖肩胛骨）<br>
+            • <b>10:30</b> 術後成果檢驗：臀形即刻對稱、長短腳落差由兩三指平正至平行！
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<!-- 巨幕重點文字呼叫 HUD (Spotlight Overlay) -->
+<div id="spotlight-overlay" onclick="closeSpotlight(event)">
+  <div class="spotlight-box" id="spotlight-box">
+    <div class="spotlight-tag" id="spotlight-tag">何訓誠老師 核心重點</div>
+    <div class="spotlight-main-title" id="spotlight-title">推髖關節五個重點</div>
+    <div class="spotlight-list" id="spotlight-list">
+      <!-- 動態插入條目 -->
+    </div>
+    <div class="spotlight-close-tip">
+      點擊任一處 或 按 <kbd>ESC</kbd> / <kbd>Space</kbd> 關閉焦點文字
+    </div>
+  </div>
+</div>
+
+<!-- 圖片放大燈箱 Lightbox -->
+<div id="lightbox" onclick="closeLightbox()">
+  <img id="lightbox-img" src="" alt="放大圖">
+</div>
+
+<!-- 底部狀態列與按鍵指引 -->
+<footer>
+  <div>
+    <span>📍 何訓誠老師整復成果發表</span> | 
+    <span id="slide-indicator" style="color: var(--accent-gold); font-weight: bold;">[1/7] 核心原理</span> | 
+    <span style="font-size: 11.5px; opacity: 0.85; color: #cbd5e1;">3D 骨骼模型出處：BodyParts3D, © The Database Center for Life Science, CC BY-SA 2.1 JP</span>
+  </div>
+
+  <div class="footer-keys">
+    <div class="footer-key-item"><kbd>←</kbd><kbd>→</kbd> 切換</div>
+    <div class="footer-key-item"><kbd>Q</kbd> 五重點</div>
+    <div class="footer-key-item"><kbd>W</kbd> 三要則</div>
+    <div class="footer-key-item"><kbd>F</kbd> 全螢幕</div>
+    <div class="footer-key-item"><kbd>ESC</kbd> 關閉</div>
+  </div>
+</footer>
+
+<!-- 腳本邏輯 -->
+<script>
+// ==================== 1. 投影片切換邏輯 ====================
+let currentSlide = 0;
+const slides = document.querySelectorAll('.slide-section');
+const navBtns = document.querySelectorAll('.nav-btn');
+const slideIndicator = document.getElementById('slide-indicator');
+
+const slideNames = [
+  "核心原理與力學",
+  "五體投地俯臥評估",
+  "3D骨盆結構與歪斜",
+  "推髖關節五大重點",
+  "薦髂三角與骨縫探查",
+  "推髖三要則與心法",
+  "課堂圖庫與影片"
+];
+
+function switchSlide(index) {
+  if (index < 0 || index >= slides.length) return;
+  slides[currentSlide].classList.remove('active');
+  navBtns[currentSlide].classList.remove('active');
+  
+  currentSlide = index;
+  slides[currentSlide].classList.add('active');
+  navBtns[currentSlide].classList.add('active');
+  
+  slideIndicator.textContent = `[${currentSlide + 1}/${slides.length}] ${slideNames[currentSlide]}`;
+  
+  // 如果切換到 3D 頁面，觸發 resize
+  if (currentSlide === 2) {
+    setTimeout(onWindowResize, 50);
+  }
+}
+
+function nextSlide() {
+  switchSlide((currentSlide + 1) % slides.length);
+}
+
+function prevSlide() {
+  switchSlide((currentSlide - 1 + slides.length) % slides.length);
+}
+
+function toggleFullscreen() {
+  if (!document.fullscreenElement) {
+    document.documentElement.requestFullscreen().catch(err => {});
+  } else {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    }
+  }
+}
+
+// ==================== 2. 巨幕重點文字呼叫系統 (Spotlight Prompter) ====================
+const spotlightOverlay = document.getElementById('spotlight-overlay');
+const spotlightTag = document.getElementById('spotlight-tag');
+const spotlightTitle = document.getElementById('spotlight-title');
+const spotlightList = document.getElementById('spotlight-list');
+
+const spotlightData = {
+  fivePoints: {
+    tag: "老師重點指定呼叫",
+    title: "推髖關節五個重點",
+    items: [
+      { num: "1", text: "髂後上脊 (PSIS)", sub: "薦髂關節核心上錨點，調節 S1 骨縫緊繃" },
+      { num: "2", text: "髂後下脊 (PIIS)", sub: "薦骨粗隆韌帶附著點，鬆解下緣卡鎖" },
+      { num: "3", text: "大轉子 (Greater Trochanter)", sub: "矯正股骨外旋跑位，即刻平正長短腳" },
+      { num: "4", text: "坐骨 (Ischium)", sub: "後下支撐基底，順勢前推展平骨盆板塊" },
+      { num: "5", text: "髂脊上端 (Iliac Crest)", sub: "最高力矩控制點，掌根下壓帶動骨盆翼旋轉" }
+    ]
+  },
+  threeRules: {
+    tag: "操作關鍵準則",
+    title: "推髖法注意事項",
+    items: [
+      { num: "1", text: "角 度", sub: "依骨盆曲面切線施力（45° / 30° / 弧形滑送），嚴禁垂直死壓" },
+      { num: "2", text: "方 向", sub: "物理第三運動定律（反作用力）：高起月餅面先推，反方向順勢回槽" },
+      { num: "3", text: "力 道", sub: "手肘打直、身體重心前送（輕輕推開即可，忌硬扳猛力）" }
+    ]
+  },
+  assessment: {
+    tag: "俯臥望診指標",
+    title: "「五體投地」體態評估重點",
+    items: [
+      { num: "1", text: "身體中軸線偏斜", sub: "相對於固定床台的傾斜角度（影片中左傾15度）" },
+      { num: "2", text: "腳跟外翻與小腿側傾", sub: "雙腳跟未平行，單側腳跟外旋" },
+      { num: "3", text: "臀型對比：月餅 vs 小籠包", sub: "月餅面（平坦頂高/受擠壓）vs 小籠包面（圓潤飽滿）" },
+      { num: "4", text: "骨盆大轉子跑位", sub: "連鎖導致雙下肢長短腳落差（差2~3指）" },
+      { num: "5", text: "高低肩與肩胛骨頂起", sub: "上身代償性歪斜與頸椎後腦連線歪斜" }
+    ]
+  },
+  triangle: {
+    tag: "解剖骨縫定位",
+    title: "薦髂關節等腰三角基準與骨縫探查",
+    items: [
+      { num: "▲", text: "等腰三角基準點", sub: "雙側髂後上脊 (PSIS) 與 尾骨構成等腰三角形" },
+      { num: "S3", text: "中心基準點 S3", sub: "等腰三角形幾何中心，中軸對齊與筋結好發處" },
+      { num: "懸", text: "骨縫「懸崖邊」探查", sub: "沿薦髂骨縫凹槽尋找深層卡住硬結（小珠珠、大珠珠）" },
+      { num: "法", text: "推、揉、撥、滑手法", sub: "以指腹或拳頭輕輕撥開筋結，關節自然鬆動合槽" }
+    ]
+  },
+  physics: {
+    tag: "整復力學心法",
+    title: "推髖正骨力學思維",
+    items: [
+      { num: "A", text: "物理第三運動定律", sub: "順應摔撞反方向回推，以柔克剛" },
+      { num: "B", text: "手臂打直做槓桿", sub: "核心重心前送，保護施術者肩肘腕關節" },
+      { num: "C", text: "身體與骨骼對話", sub: "感受骨盆律動滑順度，鬆開即停止加力" }
+    ]
+  }
+};
+
+function callSpotlight(type) {
+  const data = spotlightData[type] || spotlightData.fivePoints;
+  spotlightTag.textContent = data.tag;
+  spotlightTitle.textContent = data.title;
+  
+  spotlightList.innerHTML = data.items.map(it => `
+    <div class="spotlight-item">
+      <div class="item-badge">${it.num}</div>
+      <div class="item-text">
+        <div>${it.text}</div>
+        <div class="item-sub">${it.sub}</div>
+      </div>
+    </div>
+  `).join('');
+  
+  spotlightOverlay.classList.add('show');
+}
+
+function closeSpotlight(e) {
+  if (e && e.target && e.target.closest && e.target.closest('.spotlight-box')) return;
+  spotlightOverlay.classList.remove('show');
+}
+
+// ==================== 3. 推髖五大重點互動切換 ====================
+const pointDetails = [
+  null,
+  {
+    title: "📍 重點一：髂後上脊 (PSIS) 施術要領",
+    tag: "按鍵 [1]",
+    force: "掌根或大魚際抵住髂後上脊內側緣，順應薦骨弧度向外下方以波浪律動緩慢推送。",
+    touch: "常可摸到懸崖邊之隆起硬結或骨縫落差。",
+    relief: "解除同側腰臀牽拉感，即刻改善雙腿長短差。",
+    svgX: 140, svgY: 75,
+    name: "1. 髂後上脊 (PSIS)",
+    arrowX: 100, arrowY: 120,
+    arrowText: "施力方向 ↘"
+  },
+  {
+    title: "📍 重點二：髂後下脊 (PIIS) 施術要領",
+    tag: "按鍵 [2]",
+    force: "以拇指指腹或疊掌置於 PIIS 下緣，朝向前上方配合患者吐氣輕柔推送。",
+    touch: "深層薦骨結節韌帶張力緊繃，常伴有壓痛點。",
+    relief: "釋放薦骨下端卡鎖，減輕坐骨神經走行區張力。",
+    svgX: 150, svgY: 110,
+    name: "2. 髂後下脊 (PIIS)",
+    arrowX: 170, arrowY: 150,
+    arrowText: "施力方向 ↙"
+  },
+  {
+    title: "📍 重點三：大轉子 (Greater Trochanter) 施術要領",
+    tag: "按鍵 [3]",
+    force: "雙手掌根環抱大轉子外側，手肘打直，身體重心由外向內下方緩慢擠壓旋正。",
+    touch: "大轉子明顯向外膨出，臀中肌與梨狀肌緊繃呈條索狀。",
+    relief: "使股骨頭深納入髖臼，立即平衡雙下肢長短與內外旋角度。",
+    svgX: 55, svgY: 130,
+    name: "3. 大轉子 (Greater Trochanter)",
+    arrowX: 110, arrowY: 140,
+    arrowText: "向內上方推入 ➡"
+  },
+  {
+    title: "📍 重點四：坐骨 / 坐骨結節 (Ischium) 施術要領",
+    tag: "按鍵 [4]",
+    force: "掌根穩固扣住坐骨結節後下緣，沿人體長軸向前上方輕推，展平骨盆後部板塊。",
+    touch: "臀肌深部厚實骨塊，兩側高低與深度常有顯著不對稱。",
+    relief: "調整骨盆前後傾角，放鬆大腿後側膕繩肌起點。",
+    svgX: 125, svgY: 165,
+    name: "4. 坐骨結節 (Ischium)",
+    arrowX: 150, arrowY: 125,
+    arrowText: "向前上方送 ↗"
+  },
+  {
+    title: "📍 重點五：髂脊上端 (Iliac Crest) 施術要領",
+    tag: "按鍵 [5]",
+    force: "一手鎖定對側肩胛骨，另一手掌根鎖定髂脊上端，由後向前下方大面積深透推動。",
+    touch: "腰方肌與腹橫肌附著處，骨脊頂部通常偏高且緊硬。",
+    relief: "帶動整個髂骨板塊回旋，恢復骨盆對稱水平面。",
+    svgX: 90, svgY: 55,
+    name: "5. 髂脊上端 (Iliac Crest)",
+    arrowX: 130, arrowY: 90,
+    arrowText: "向前下方送 ↘"
+  }
+];
+
+let currentPoint = 1;
+
+function selectPoint(num) {
+  if (num < 1 || num > 5) return;
+  currentPoint = num;
+  for (let i = 1; i <= 5; i++) {
+    const card = document.getElementById(`pt-card-${i}`);
+    if (card) {
+      if (i === num) card.classList.add('active-point');
+      else card.classList.remove('active-point');
+    }
+  }
+
+  const d = pointDetails[num];
+  document.getElementById('point-detail-title').textContent = d.title;
+  document.getElementById('point-detail-tag').textContent = d.tag;
+  document.getElementById('point-detail-force').textContent = d.force;
+  document.getElementById('point-detail-touch').textContent = d.touch;
+  document.getElementById('point-detail-relief').textContent = d.relief;
+
+  // 更新 SVG 標記
+  const svgMark = document.getElementById('svg-mark-point');
+  const svgText = document.getElementById('svg-mark-text');
+  const svgLine = document.getElementById('svg-arrow-line');
+  const svgArrowText = document.getElementById('svg-arrow-text');
+
+  if (svgMark) {
+    svgMark.setAttribute('cx', d.svgX);
+    svgMark.setAttribute('cy', d.svgY);
+    svgText.setAttribute('x', d.svgX + 20);
+    svgText.setAttribute('y', d.svgY + 5);
+    svgText.textContent = d.name;
+    svgLine.setAttribute('x1', d.svgX);
+    svgLine.setAttribute('y1', d.svgY);
+    svgLine.setAttribute('x2', d.arrowX);
+    svgLine.setAttribute('y2', d.arrowY);
+    svgArrowText.setAttribute('x', d.arrowX - 20);
+    svgArrowText.setAttribute('y', d.arrowY + 20);
+    svgArrowText.textContent = d.arrowText;
+  }
+}
+
+function nextPoint() {
+  selectPoint(currentPoint % 5 + 1);
+}
+
+function prevPoint() {
+  selectPoint(currentPoint === 1 ? 5 : currentPoint - 1);
+}
+
+// ==================== 4. 課堂圖片燈箱 (Media Gallery) ====================
+const imageList = [
+  { file: "284420_0.jpg", name: "四大站姿體態力線分析" },
+  { file: "284421_0.jpg", name: "脊椎側彎 Cobb 角量測力線" },
+  { file: "284422_0.jpg", name: "脊柱節段旋轉與側彎代償圖" },
+  { file: "284423_0.jpg", name: "脊柱與神經根解剖示意圖" },
+  { file: "284424_0.jpg", name: "下肢力線與 Q 角對位示意" },
+  { file: "284425_0.jpg", name: "骨盆骨性標誌與解剖結構" },
+  { file: "284426_0.jpg", name: "薦髂關節韌帶與骨盆深層結構" },
+  { file: "284427_0.jpg", name: "下肢受力與長短腳力學關聯" },
+  { file: "284428_0.jpg", name: "課堂實操：俯臥骨盆觸診評估" },
+  { file: "284429_0.jpg", name: "課堂實操：推髖掌法與施力定位" },
+  { file: "284430_0.jpg", name: "課堂實操：核心送力與身法示範" },
+  { file: "284431_0.jpg", name: "課堂實操：術後長短腳平衡檢驗" }
+];
+
+function initGallery() {
+  const container = document.getElementById('gallery-container');
+  if (!container) return;
+  container.innerHTML = imageList.map(img => `
+    <div class="gallery-thumb" onclick="openLightbox('整復/${img.file}')">
+      <img src="整復/${img.file}" onerror="this.onerror=null; this.src='${img.file}';" alt="${img.name}">
+      <div class="label">${img.name}</div>
+    </div>
+  `).join('');
+}
+
+function openLightbox(src) {
+  const lb = document.getElementById('lightbox');
+  const img = document.getElementById('lightbox-img');
+  img.src = src;
+  lb.classList.add('show');
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('show');
+}
+
+// ==================== 5. Three.js 3D 骨盆與脊椎動態模擬 ====================
+let scene, camera, renderer, controls;
+let pelvisGroup, spineGroup, leftPelvis, rightPelvis, sacrumMesh, lumbarSpine;
+let currentPelvisState = 'neutral'; // 'neutral' or 'skewed'
+let isAnimatingReduction = false;
+let isRealAnatomyLoaded = false;
+let realMeshHipL, realMeshHipR;
+
+function base64ToArrayBuffer(base64) {
+  const binary_string = window.atob(base64);
+  const len = binary_string.length;
+  const bytes = new Uint8Array(len);
+  for (let i = 0; i < len; i++) {
+    bytes[i] = binary_string.charCodeAt(i);
+  }
+  return bytes.buffer;
+}
+
+function init3D() {
+  const container = document.getElementById('canvas-container');
+  if (!container || typeof THREE === 'undefined') return;
+
+  const width = container.clientWidth || 600;
+  const height = container.clientHeight || 500;
+
+  scene = new THREE.Scene();
+  scene.background = new THREE.Color(0x0a0f1d);
+  scene.fog = new THREE.FogExp2(0x0a0f1d, 0.032);
+
+  // 鏡頭初始位置與朝向：重新框取模型，確保正常態與歪斜態皆不爆版
+  camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 100);
+  camera.position.set(0, 0.8, 8.2);
+
+  renderer = new THREE.WebGLRenderer({ canvas: document.getElementById('three-canvas'), antialias: true, alpha: false });
+  renderer.setSize(width, height);
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+  renderer.shadowMap.enabled = true;
+  renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+
+  // 專業色彩管理與 ACESFilmic 色調映射
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping;
+  renderer.toneMappingExposure = 1.05;
+
+  if (typeof THREE.OrbitControls !== 'undefined') {
+    controls = new THREE.OrbitControls(camera, renderer.domElement);
+    controls.enableDamping = true;
+    controls.dampingFactor = 0.06;
+    controls.maxPolarAngle = Math.PI / 2 + 0.2;
+    controls.minDistance = 2.5;
+    controls.maxDistance = 14;
+    controls.target.set(0, 0.2, 0);
+  }
+
+  // 光照系統：中性自然象牙柔光 + 半球環境光 + 輪廓冷光 + 投影陰影
+  const ambientLight = new THREE.AmbientLight(0xf1f5f9, 0.35);
+  scene.add(ambientLight);
+
+  const hemiLight = new THREE.HemisphereLight(0xf8fafc, 0x1e293b, 0.35);
+  scene.add(hemiLight);
+
+  const mainLight = new THREE.DirectionalLight(0xfffbf0, 1.25);
+  mainLight.position.set(5, 10, 7);
+  mainLight.castShadow = true;
+  mainLight.shadow.mapSize.width = 1024;
+  mainLight.shadow.mapSize.height = 1024;
+  mainLight.shadow.camera.near = 0.5;
+  mainLight.shadow.camera.far = 25;
+  mainLight.shadow.camera.left = -4;
+  mainLight.shadow.camera.right = 4;
+  mainLight.shadow.camera.top = 4;
+  mainLight.shadow.camera.bottom = -4;
+  mainLight.shadow.bias = -0.0005;
+  scene.add(mainLight);
+
+  const rimLight = new THREE.DirectionalLight(0x38bdf8, 0.45);
+  rimLight.position.set(-6, 4, -5);
+  scene.add(rimLight);
+
+  const fillLight = new THREE.DirectionalLight(0xe2e8f0, 0.35);
+  fillLight.position.set(0, -4, 4);
+  scene.add(fillLight);
+
+  // 骨盆下方柔和接觸陰影 (Contact Shadow Disk)
+  const shadowCanvas = document.createElement('canvas');
+  shadowCanvas.width = 128;
+  shadowCanvas.height = 128;
+  const sCtx = shadowCanvas.getContext('2d');
+  const gradient = sCtx.createRadialGradient(64, 64, 0, 64, 64, 64);
+  gradient.addColorStop(0, 'rgba(0, 0, 0, 0.7)');
+  gradient.addColorStop(0.5, 'rgba(0, 0, 0, 0.3)');
+  gradient.addColorStop(1, 'rgba(0, 0, 0, 0)');
+  sCtx.fillStyle = gradient;
+  sCtx.fillRect(0, 0, 128, 128);
+
+  const shadowTex = new THREE.CanvasTexture(shadowCanvas);
+  const shadowGeo = new THREE.PlaneGeometry(6.0, 6.0);
+  const shadowMat = new THREE.MeshBasicMaterial({
+    map: shadowTex,
+    transparent: true,
+    opacity: 0.75,
+    depthWrite: false
+  });
+  const contactShadow = new THREE.Mesh(shadowGeo, shadowMat);
+  contactShadow.rotation.x = -Math.PI / 2;
+  contactShadow.position.y = -2.85;
+  scene.add(contactShadow);
+
+  // 地面網格
+  const gridHelper = new THREE.GridHelper(12, 12, 0x1e293b, 0x0f172a);
+  gridHelper.position.y = -2.9;
+  scene.add(gridHelper);
+
+  // 載入真實解剖模型（若失敗則退回幾何體備援）
+  loadAnatomicalModel();
+
+  window.addEventListener('resize', onWindowResize);
+  animate3D();
+}
+
+function loadAnatomicalModel() {
+  if (typeof THREE.GLTFLoader !== 'undefined' && typeof window.PELVIS_GLB_B64 !== 'undefined' && window.PELVIS_GLB_B64.length > 100) {
+    try {
+      const loader = new THREE.GLTFLoader();
+      const buffer = base64ToArrayBuffer(window.PELVIS_GLB_B64);
+      loader.parse(buffer, '', (gltf) => {
+        buildRealAnatomyScene(gltf.scene);
+      }, (err) => {
+        console.warn('GLTFLoader parse error, falling back:', err);
+        buildProceduralSkeletalModel();
+      });
+      return;
+    } catch (e) {
+      console.warn('Exception during GLTF load, falling back:', e);
+    }
+  }
+  buildProceduralSkeletalModel();
+}
+
+// 建立真實解剖模型場景（BodyParts3D 開源解剖骨骼）
+function buildRealAnatomyScene(modelScene) {
+  isRealAnatomyLoaded = true;
+  pelvisGroup = new THREE.Group();
+  pelvisGroup.scale.set(4.2, 4.2, 4.2);
+  pelvisGroup.position.set(0, -0.4, 0);
+  scene.add(pelvisGroup);
+
+  // 象牙暖骨質物理材質 (P1 - 調整環境光與補光、帶灰黃天然骨色、粗糙霧面)
+  const boneMaterial = new THREE.MeshStandardMaterial({
+    color: 0xe2d7bf,
+    roughness: 0.55,
+    metalness: 0.02,
+    side: THREE.DoubleSide
+  });
+
+  // 椎間盤膠質半透明材質
+  const discMaterial = new THREE.MeshStandardMaterial({
+    color: 0xc8d6e5,
+    roughness: 0.45,
+    metalness: 0.02,
+    transparent: true,
+    opacity: 0.88,
+    side: THREE.DoubleSide
+  });
+
+  // 遍歷所有解剖部件並設置材質與投影陰影
+  modelScene.traverse(child => {
+    if (child.isMesh) {
+      child.castShadow = true;
+      child.receiveShadow = true;
+      // 來源模型法線方向不一定一致，重新計算並改用雙面渲染，避免因法線反向導致整塊骨頭顯示為黑色
+      if (child.geometry) {
+        child.geometry.computeVertexNormals();
+      }
+      if (child.name.startsWith('disc_')) {
+        child.material = discMaterial.clone();
+      } else {
+        child.material = boneMaterial.clone();
+      }
+    }
+  });
+
+  // 1. 中央薦骨 (Sacrum)
+  sacrumMesh = modelScene.getObjectByName('sacrum');
+  if (sacrumMesh) pelvisGroup.add(sacrumMesh);
+
+  // 2. 左側髖骨與股骨群組 (Left Pelvis)
+  // 設定左薦髂關節 (SI Joint L: 0.123, 0.149, -0.108) 為樞紐點
+  leftPelvis = new THREE.Group();
+  leftPelvis.position.set(0.123, 0.149, -0.108);
+
+  realMeshHipL = modelScene.getObjectByName('hip_L');
+  const realMeshFemurL = modelScene.getObjectByName('femur_L');
+
+  if (realMeshHipL) {
+    realMeshHipL.position.set(-0.123, -0.149, 0.108);
+    leftPelvis.add(realMeshHipL);
+  }
+  if (realMeshFemurL) {
+    realMeshFemurL.position.set(-0.123, -0.149, 0.108);
+    leftPelvis.add(realMeshFemurL);
+  }
+  pelvisGroup.add(leftPelvis);
+
+  // 3. 右側髖骨與股骨群組 (Right Pelvis)
+  // 設定右薦髂關節 (SI Joint R: -0.110, 0.183, -0.132) 為樞紐點
+  rightPelvis = new THREE.Group();
+  rightPelvis.position.set(-0.110, 0.183, -0.132);
+
+  realMeshHipR = modelScene.getObjectByName('hip_R');
+  const realMeshFemurR = modelScene.getObjectByName('femur_R');
+
+  if (realMeshHipR) {
+    realMeshHipR.position.set(0.110, -0.183, 0.132);
+    rightPelvis.add(realMeshHipR);
+  }
+  if (realMeshFemurR) {
+    realMeshFemurR.position.set(0.110, -0.183, 0.132);
+    rightPelvis.add(realMeshFemurR);
+  }
+  pelvisGroup.add(rightPelvis);
+
+  // 4. 腰椎與椎間盤 (L1 ~ L5)
+  spineGroup = new THREE.Group();
+  lumbarSpine = [];
+  const lumbarNames = ['L5', 'L4', 'L3', 'L2', 'L1'];
+  const discNames = ['disc_L5_S1', 'disc_L4_L5', 'disc_L3_L4', 'disc_L2_L3', 'disc_L1_L2'];
+
+  lumbarNames.forEach(name => {
+    const v = modelScene.getObjectByName(name);
+    if (v) {
+      spineGroup.add(v);
+      lumbarSpine.push(v);
+    }
+  });
+  discNames.forEach(name => {
+    const d = modelScene.getObjectByName(name);
+    if (d) spineGroup.add(d);
+  });
+  pelvisGroup.add(spineGroup);
+
+  // 5. 3D 解剖標記點（掛在 leftPelvis 節點下，隨骨骼旋轉同步運動，標籤拉到骨面外側並用指示線＋箭頭指回點位，避免互相遮擋）
+  // 1. PSIS (髂後上脊) - 琥珀金
+  addPinMarkerWithLabel(leftPelvis, -0.006, 0.100, -0.132, "1. 髂後上脊 (PSIS)", 0xf59e0b, { x: -0.30, y: 0.16, z: -0.06 });
+  // 2. PIIS (髂後下脊) - 青綠色
+  addPinMarkerWithLabel(leftPelvis, -0.011, -0.124, -0.049, "2. 髂後下脊 (PIIS)", 0x06b6d4, { x: -0.32, y: -0.03, z: -0.04 });
+  // 3. 大轉子 (Trochanter) - 暖橙色 (不違反「紅色只用於歪斜」原則，外展浮出)
+  addPinMarkerWithLabel(leftPelvis, 0.252, -0.210, 0.050, "3. 大轉子 (Trochanter)", 0xf97316, { x: 0.30, y: 0.08, z: 0.10 });
+  // 4. 坐骨結節 (Ischium) - 翡翠綠
+  addPinMarkerWithLabel(leftPelvis, -0.013, -0.293, -0.005, "4. 坐骨結節 (Ischium)", 0x10b981, { x: -0.26, y: -0.18, z: 0.02 });
+  // 5. 髂脊上端 (Iliac Crest) - 丁香紫
+  addPinMarkerWithLabel(leftPelvis, 0.120, 0.226, 0.013, "5. 髂脊上端 (Crest)", 0xa855f7, { x: 0.24, y: 0.20, z: 0.06 });
+}
+
+// 建立 3D 骨性標記點與文字標籤 Sprite（標籤置於 offset 指定之外側位置，並以指示線＋箭頭連回骨面點，避免標籤蓋住點位）
+function addPinMarkerWithLabel(parent, x, y, z, labelText, colorHex, offset) {
+  const pinGroup = new THREE.Group();
+  pinGroup.position.set(x, y, z);
+
+  // 骨面光球標記
+  const sphereGeo = new THREE.SphereGeometry(0.020, 16, 16);
+  const sphereMat = new THREE.MeshBasicMaterial({ color: colorHex, depthTest: false });
+  const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+  sphere.renderOrder = 997;
+  pinGroup.add(sphere);
+
+  // 外圈柔和發光環
+  const ringGeo = new THREE.RingGeometry(0.028, 0.038, 24);
+  const ringMat = new THREE.MeshBasicMaterial({ color: colorHex, side: THREE.DoubleSide, transparent: true, opacity: 0.8, depthTest: false });
+  const ring = new THREE.Mesh(ringGeo, ringMat);
+  ring.rotation.x = Math.PI / 2;
+  ring.renderOrder = 997;
+  pinGroup.add(ring);
+
+  const ox = offset.x, oy = offset.y, oz = offset.z;
+
+  // 指示線：從骨面點拉到標籤外側
+  const lineMat = new THREE.LineBasicMaterial({ color: colorHex, transparent: true, opacity: 0.85, depthTest: false });
+  const lineGeo = new THREE.BufferGeometry().setFromPoints([
+    new THREE.Vector3(0, 0, 0),
+    new THREE.Vector3(ox * 0.86, oy * 0.86, oz * 0.86)
+  ]);
+  const leaderLine = new THREE.Line(lineGeo, lineMat);
+  leaderLine.renderOrder = 998;
+  pinGroup.add(leaderLine);
+
+  // 箭頭：尖端指回骨面點
+  const arrowGeo = new THREE.ConeGeometry(0.013, 0.032, 10);
+  const arrowMat = new THREE.MeshBasicMaterial({ color: colorHex, depthTest: false });
+  const arrow = new THREE.Mesh(arrowGeo, arrowMat);
+  const dir = new THREE.Vector3(-ox, -oy, -oz).normalize();
+  arrow.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), dir);
+  arrow.position.set(ox * 0.16, oy * 0.16, oz * 0.16);
+  arrow.renderOrder = 998;
+  pinGroup.add(arrow);
+
+  // 獨立 Canvas 繪製之高清晰藥丸標籤 Sprite
+  const canvas = document.createElement('canvas');
+  canvas.width = 320;
+  canvas.height = 70;
+  const ctx = canvas.getContext('2d');
+
+  // 底色與描邊
+  ctx.fillStyle = 'rgba(10, 15, 29, 0.88)';
+  ctx.strokeStyle = '#' + colorHex.toString(16).padStart(6, '0');
+  ctx.lineWidth = 4;
+  ctx.beginPath();
+  if (ctx.roundRect) ctx.roundRect(4, 4, 312, 62, 16);
+  else ctx.rect(4, 4, 312, 62);
+  ctx.fill();
+  ctx.stroke();
+
+  // 指示燈圓點
+  ctx.fillStyle = '#' + colorHex.toString(16).padStart(6, '0');
+  ctx.beginPath();
+  ctx.arc(28, 35, 10, 0, Math.PI * 2);
+  ctx.fill();
+
+  // 標籤文字
+  ctx.fillStyle = '#ffffff';
+  ctx.font = 'bold 24px -apple-system, BlinkMacSystemFont, "Microsoft JhengHei UI", sans-serif';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(labelText, 48, 36);
+
+  const tex = new THREE.CanvasTexture(canvas);
+  const spriteMat = new THREE.SpriteMaterial({ map: tex, depthTest: false });
+  const sprite = new THREE.Sprite(spriteMat);
+  sprite.scale.set(0.42, 0.092, 1);
+  sprite.position.set(ox, oy, oz);
+  sprite.renderOrder = 999;
+  pinGroup.add(sprite);
+
+  parent.add(pinGroup);
+}
+
+// 幾何體版本備援（避免外部檔案異常時黑畫面）
+function buildProceduralSkeletalModel() {
+  pelvisGroup = new THREE.Group();
+  scene.add(pelvisGroup);
+
+  const boneMaterial = new THREE.MeshStandardMaterial({
+    color: 0xe2d7bf,
+    roughness: 0.55,
+    metalness: 0.02
+  });
+
+  const sacrumGeom = new THREE.ConeGeometry(0.82, 1.6, 6);
+  sacrumMesh = new THREE.Mesh(sacrumGeom, boneMaterial);
+  sacrumMesh.rotation.x = Math.PI;
+  sacrumMesh.position.set(0, 0, -0.2);
+  pelvisGroup.add(sacrumMesh);
+
+  leftPelvis = new THREE.Group();
+  const iliacWingGeom = new THREE.TorusGeometry(1.2, 0.28, 16, 32, Math.PI * 0.9);
+  const leftIlium = new THREE.Mesh(iliacWingGeom, boneMaterial);
+  leftIlium.position.set(-1.1, 0.4, 0);
+  leftIlium.rotation.set(0.2, 0.4, Math.PI / 4);
+  leftPelvis.add(leftIlium);
+
+  const femurGeom = new THREE.CylinderGeometry(0.22, 0.2, 2.5, 16);
+  const leftFemur = new THREE.Mesh(femurGeom, boneMaterial);
+  leftFemur.position.set(-1.6, -1.5, 0.1);
+  leftFemur.rotation.z = -0.08;
+  leftPelvis.add(leftFemur);
+  pelvisGroup.add(leftPelvis);
+
+  rightPelvis = new THREE.Group();
+  const rightIlium = new THREE.Mesh(iliacWingGeom, boneMaterial.clone());
+  rightIlium.position.set(1.1, 0.4, 0);
+  rightIlium.rotation.set(0.2, -0.4, -Math.PI / 4 + Math.PI);
+  rightPelvis.add(rightIlium);
+
+  const rightFemur = new THREE.Mesh(femurGeom, boneMaterial.clone());
+  rightFemur.position.set(1.6, -1.5, 0.1);
+  rightFemur.rotation.z = 0.08;
+  rightPelvis.add(rightFemur);
+  pelvisGroup.add(rightPelvis);
+
+  spineGroup = new THREE.Group();
+  spineGroup.position.set(0, 0.8, -0.1);
+  lumbarSpine = [];
+  for (let i = 0; i < 5; i++) {
+    const vertGeom = new THREE.CylinderGeometry(0.42 - i * 0.02, 0.45 - i * 0.02, 0.24, 16);
+    const vertebra = new THREE.Mesh(vertGeom, boneMaterial);
+    vertebra.position.set(0, i * 0.38, 0);
+    spineGroup.add(vertebra);
+    lumbarSpine.push(vertebra);
+  }
+  pelvisGroup.add(spineGroup);
+}
+
+function onWindowResize() {
+  const container = document.getElementById('canvas-container');
+  if (!container || !renderer || !camera) return;
+  const w = container.clientWidth;
+  const h = container.clientHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+}
+
+function animate3D() {
+  requestAnimationFrame(animate3D);
+  if (controls) controls.update();
+  
+  // 緩慢自轉展示（在沒有拖曳時輕微呼吸浮動）
+  if (pelvisGroup && !isAnimatingReduction) {
+    pelvisGroup.position.y = -0.4 + Math.sin(Date.now() * 0.0015) * 0.03;
+  }
+  
+  if (renderer && scene && camera) {
+    renderer.render(scene, camera);
+  }
+}
+
+// 設置骨盆狀態 (正常 vs 歪斜)
+function setPelvisMode(mode) {
+  currentPelvisState = mode;
+  const tag = document.getElementById('model-status-tag');
+  const btnNeutral = document.getElementById('btn-mode-neutral');
+  const btnSkewed = document.getElementById('btn-mode-skewed');
+
+  if (mode === 'skewed') {
+    if (tag) {
+      tag.textContent = "目前模式：骨盆歪斜態（左側傾扭轉・腰椎側彎代償）";
+      tag.style.color = "#ef4444";
+    }
+    if (btnNeutral) btnNeutral.classList.remove('active');
+    if (btnSkewed) btnSkewed.classList.add('active');
+
+    if (isRealAnatomyLoaded) {
+      // 真實解剖骨盆：左骨盆繞薦髂關節上提前旋、應力發紅
+      leftPelvis.position.set(0.123 - 0.04, 0.149 + 0.08, -0.108 + 0.04);
+      leftPelvis.rotation.set(0.12, 0.08, 0.14);
+
+      if (realMeshHipL && realMeshHipL.material) {
+        realMeshHipL.material.emissive = new THREE.Color(0x7f1d1d);
+        realMeshHipL.material.emissiveIntensity = 0.45;
+      }
+
+      // 右骨盆相對下沉代償
+      rightPelvis.position.set(-0.110 + 0.02, 0.183 - 0.04, -0.132 - 0.02);
+      rightPelvis.rotation.set(-0.04, -0.03, -0.06);
+
+      // 薦骨扭轉偏歪
+      sacrumMesh.rotation.set(0.04, 0.06, 0.07);
+
+      // 腰椎代償性側彎
+      lumbarSpine.forEach((v, idx) => {
+        if (v) {
+          v.position.x = Math.sin(idx * 0.6) * 0.035;
+          v.rotation.z = -idx * 0.025;
+        }
+      });
+    } else {
+      // 幾何體版本
+      leftPelvis.position.set(-1.1, 0.28, 0.15);
+      leftPelvis.rotation.set(0.15, 0.1, 0.18);
+      leftPelvis.traverse(child => {
+        if (child.isMesh && child.material) {
+          child.material.emissive = new THREE.Color(0x7f1d1d);
+          child.material.emissiveIntensity = 0.35;
+        }
+      });
+      rightPelvis.position.set(1.1, -0.15, -0.1);
+      rightPelvis.rotation.set(-0.05, -0.05, -0.1);
+      sacrumMesh.rotation.set(Math.PI, 0.15, 0.12);
+      lumbarSpine.forEach((v, idx) => {
+        v.position.x = Math.sin(idx * 0.5) * 0.18;
+        v.rotation.z = -idx * 0.05;
+      });
+    }
+  } else {
+    if (tag) {
+      tag.textContent = "目前模式：正常中立位 (Neutral Alignment)";
+      tag.style.color = "#10b981";
+    }
+    if (btnNeutral) btnNeutral.classList.add('active');
+    if (btnSkewed) btnSkewed.classList.remove('active');
+
+    if (isRealAnatomyLoaded) {
+      // 回復真實中立位
+      leftPelvis.position.set(0.123, 0.149, -0.108);
+      leftPelvis.rotation.set(0, 0, 0);
+
+      if (realMeshHipL && realMeshHipL.material) {
+        realMeshHipL.material.emissive = new THREE.Color(0x000000);
+        realMeshHipL.material.emissiveIntensity = 0;
+      }
+
+      rightPelvis.position.set(-0.110, 0.183, -0.132);
+      rightPelvis.rotation.set(0, 0, 0);
+
+      sacrumMesh.rotation.set(0, 0, 0);
+
+      lumbarSpine.forEach(v => {
+        if (v) {
+          v.position.x = 0;
+          v.rotation.z = 0;
+        }
+      });
+    } else {
+      leftPelvis.position.set(0, 0, 0);
+      leftPelvis.rotation.set(0, 0, 0);
+      leftPelvis.traverse(child => {
+        if (child.isMesh && child.material) {
+          child.material.emissive = new THREE.Color(0x000000);
+          child.material.emissiveIntensity = 0;
+        }
+      });
+      rightPelvis.position.set(0, 0, 0);
+      rightPelvis.rotation.set(0, 0, 0);
+      sacrumMesh.rotation.set(Math.PI, 0, 0);
+      lumbarSpine.forEach(v => {
+        v.position.x = 0;
+        v.rotation.z = 0;
+      });
+    }
+  }
+}
+
+// 推髖正骨動態復位動畫演示
+let toastTimer = null;
+function triggerReductionAnimation() {
+  if (isAnimatingReduction) return;
+  isAnimatingReduction = true;
+  setPelvisMode('skewed');
+
+  const tag = document.getElementById('model-status-tag');
+  if (tag) {
+    tag.textContent = "⏳ 正在模擬「推髖法」施力順勢復位回槽中...";
+    tag.style.color = "#f59e0b";
+  }
+
+  let progress = 0;
+  const animInterval = setInterval(() => {
+    progress += 0.025;
+    if (progress >= 1) {
+      clearInterval(animInterval);
+      setPelvisMode('neutral');
+      isAnimatingReduction = false;
+
+      // 觸發自動淡出 Toast
+      const toast = document.getElementById('canvas-toast');
+      if (toast) {
+        toast.classList.add('show');
+        if (toastTimer) clearTimeout(toastTimer);
+        toastTimer = setTimeout(() => {
+          toast.classList.remove('show');
+        }, 2200);
+      }
+      return;
+    }
+
+    // 線性插值回正
+    const t = 1 - progress;
+    if (isRealAnatomyLoaded) {
+      leftPelvis.position.set(0.123 - 0.04 * t, 0.149 + 0.08 * t, -0.108 + 0.04 * t);
+      leftPelvis.rotation.set(0.12 * t, 0.08 * t, 0.14 * t);
+      rightPelvis.position.set(-0.110 + 0.02 * t, 0.183 - 0.04 * t, -0.132 - 0.02 * t);
+      rightPelvis.rotation.set(-0.04 * t, -0.03 * t, -0.06 * t);
+      sacrumMesh.rotation.set(0.04 * t, 0.06 * t, 0.07 * t);
+      lumbarSpine.forEach((v, idx) => {
+        if (v) {
+          v.position.x = Math.sin(idx * 0.6) * 0.035 * t;
+          v.rotation.z = -idx * 0.025 * t;
+        }
+      });
+    } else {
+      leftPelvis.position.y = 0.28 * t;
+      leftPelvis.rotation.z = 0.18 * t;
+      rightPelvis.position.y = -0.15 * t;
+      sacrumMesh.rotation.z = 0.12 * t;
+      lumbarSpine.forEach((v, idx) => {
+        v.position.x = Math.sin(idx * 0.5) * 0.18 * t;
+        v.rotation.z = -idx * 0.05 * t;
+      });
+    }
+  }, 25);
+}
+
+function reset3DCamera() {
+  if (!camera || !controls) return;
+  tweenCamera(0, 0.8, 8.2, 0, 0.2, 0);
+}
+
+// 聚焦部位鏡頭平滑過渡
+function focus3DPart(part) {
+  if (!camera || !controls) return;
+  
+  // 更新右側卡片選中態
+  const cards = document.querySelectorAll('#three-detail-box .concept-card');
+  cards.forEach(c => c.classList.remove('active-point'));
+
+  if (part === 'pelvis') {
+    document.querySelector('.part-pelvis')?.classList.add('active-point');
+    tweenCamera(0, 0.4, 7.2, 0, 0.1, 0);
+  } else if (part === 'si_joint') {
+    document.querySelector('.part-si')?.classList.add('active-point');
+    tweenCamera(0.8, 0.5, -4.8, 0.4, 0.2, 0);
+  } else if (part === 'lumbar') {
+    document.querySelector('.part-lumbar')?.classList.add('active-point');
+    tweenCamera(0, 2.0, 5.0, 0, 1.4, 0);
+  } else if (part === 'femur') {
+    document.querySelector('.part-femur')?.classList.add('active-point');
+    tweenCamera(2.2, -0.9, 4.8, 1.4, -0.6, 0);
+  }
+}
+
+// 簡易平滑鏡頭過渡
+let cameraTweenTimer = null;
+function tweenCamera(tx, ty, tz, cx, cy, cz) {
+  if (!camera || !controls) return;
+  const startPos = camera.position.clone();
+  const startTarget = controls.target.clone();
+  const endPos = new THREE.Vector3(tx, ty, tz);
+  const endTarget = new THREE.Vector3(cx, cy, cz);
+  
+  let step = 0;
+  if (cameraTweenTimer) clearInterval(cameraTweenTimer);
+  cameraTweenTimer = setInterval(() => {
+    step += 0.05;
+    if (step >= 1) {
+      clearInterval(cameraTweenTimer);
+      camera.position.copy(endPos);
+      controls.target.copy(endTarget);
+      controls.update();
+      return;
+    }
+    camera.position.lerpVectors(startPos, endPos, step);
+    controls.target.lerpVectors(startTarget, endTarget, step);
+    controls.update();
+  }, 20);
+}
+// ==================== 6. 鍵盤快速鍵全域監聽 ====================
+window.addEventListener('keydown', (e) => {
+  // 如果按下 ESC 或 Space，關閉所有 Overlay
+  if (e.key === 'Escape' || e.code === 'Space') {
+    closeSpotlight();
+    closeLightbox();
+    return;
+  }
+
+  // F 鍵：切換全螢幕
+  if (e.key === 'f' || e.key === 'F') {
+    toggleFullscreen();
+    return;
+  }
+
+  // 方向鍵切換投影片
+  if (e.key === 'ArrowRight' || e.key === 'PageDown') {
+    nextSlide();
+    return;
+  }
+  if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+    prevSlide();
+    return;
+  }
+
+  // F1 ~ F7 切換投影片
+  if (e.key.startsWith('F') && e.key.length === 2) {
+    const fNum = parseInt(e.key[1]);
+    if (fNum >= 1 && fNum <= 7) {
+      e.preventDefault();
+      switchSlide(fNum - 1);
+      return;
+    }
+  }
+
+  // 數字鍵 1 ~ 5：切換推髖五重點
+  if (['1', '2', '3', '4', '5'].includes(e.key) && !spotlightOverlay.classList.contains('show')) {
+    if (currentSlide !== 3) {
+      switchSlide(3); // 自動跳至五重點 Slide
+    }
+    selectPoint(parseInt(e.key));
+    return;
+  }
+
+  // 老師重點快速呼叫快捷鍵 (Q, W, E, R, T)
+  const key = e.key.toLowerCase();
+  if (key === 'q') {
+    callSpotlight('fivePoints');
+  } else if (key === 'w') {
+    callSpotlight('threeRules');
+  } else if (key === 'e') {
+    callSpotlight('assessment');
+  } else if (key === 'r') {
+    callSpotlight('triangle');
+  } else if (key === 't') {
+    callSpotlight('physics');
+  } else if (key === 'n') {
+    setPelvisMode('neutral');
+  } else if (key === 'm') {
+    setPelvisMode('skewed');
+  } else if (key === 'p') {
+    triggerReductionAnimation();
+  }
+});
+
+// 初始化
+window.addEventListener('DOMContentLoaded', () => {
+  selectPoint(1);
+  initGallery();
+  setTimeout(init3D, 200);
+});
+</script>
+
+</body>
+</html>
